@@ -1,0 +1,41 @@
+.App {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  min-height: 100vh;
+  position: relative;
+  .App-main {
+    flex: 1;
+  }
+
+  section {
+    display: flex;
+    min-height: 90vh;
+  }
+
+  .scroll-to-up {
+    position: absolute;
+    z-index: 999;
+  }
+
+  .scroll-to-up.active {
+    transition: all 0.5s;
+    animation-name: showUp;
+    animation-duration: 1s;
+    animation-delay: 0;
+    animation-fill-mode: forwards;
+  }
+
+  @keyframes showUp {
+    from {
+      position: fixed;
+      bottom: 20px;
+      right: 0px;
+    }
+    to {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+    }
+  }
+}

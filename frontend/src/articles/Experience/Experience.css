@@ -1,0 +1,32 @@
+.experience {
+  margin: 0 auto 20px;
+}
+.experience span.intro-title {
+  color: fuchsia;
+}
+.experience .card {
+  height: 200px;
+  overflow: hidden;
+}
+.experience .card .img-container {
+  width: 100%;
+  height: auto;
+  overflow: hidden;
+}
+.experience .card .img-container img {
+  width: 100%;
+  height: 100%;
+  transition: all 0.5s ease-in-out;
+}
+.experience .card .text {
+  transition: all 0.5s linear;
+  position: absolute;
+  bottom: -200px;
+}
+.experience .card:hover .text {
+  bottom: 2px;
+  background-color: #000;
+}
+.experience .card:hover img {
+  transform: translate(0, -30px);
+}/*# sourceMappingURL=Experience.css.map */

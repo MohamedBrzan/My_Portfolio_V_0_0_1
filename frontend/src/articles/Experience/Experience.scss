@@ -1,0 +1,40 @@
+@use '../../sass/Variables' as *;
+
+.experience {
+  margin: 0 auto 20px;
+  span.intro-title {
+    color: $main-color;
+  }
+  .card {
+    height: 200px;
+    overflow: hidden;
+    .img-container {
+      width: 100%;
+      height: auto;
+      overflow: hidden;
+
+      img {
+        width: 100%;
+        height: 100%;
+
+        -webkit-transition: all 0.5s ease-in-out;
+        -moz-transition: all 0.5s ease-in-out;
+        transition: all 0.5s ease-in-out;
+      }
+    }
+    .text {
+      transition: all 0.5s linear;
+      position: absolute;
+      bottom: -200px;
+    }
+    &:hover {
+      .text {
+        bottom: 2px;
+        background-color: #000;
+      }
+      img {
+        transform: translate(0, -30px);
+      }
+    }
+  }
+}
