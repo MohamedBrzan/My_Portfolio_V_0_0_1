@@ -137,7 +137,7 @@ const About = () => {
             <>
               <h3 className='introduction'>
                 i'm creative<span className='intro-title'> web developer </span>{' '}
-                based in <br /> tanta, egypt
+                based in <br /> egypt, tanta
               </h3>
               <h5 className='introduction'>{about.description}</h5>
               <Button variant={about.button.variant}>
