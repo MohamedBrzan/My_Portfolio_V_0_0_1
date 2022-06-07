@@ -1,8 +1,5 @@
 import { useNavigate, useParams } from 'react-router-dom';
-import {
-  useEditServiceMutation,
-  useGetServiceDetailsQuery,
-} from '../../../store/apis/ServiceSlice';
+import { useGetServiceDetailsQuery } from '../../../store/apis/ServiceSlice';
 import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
@@ -25,34 +22,29 @@ const EditServiceForm = () => {
     error,
   } = useGetServiceDetailsQuery(`${aboutId}/${serviceId}`);
 
-  const [updateService, { isLoading }] = useEditServiceMutation();
-
   const [icon, setIcon] = useState('');
   const [service, setService] = useState('');
   const [serviceDesc, setServiceDesc] = useState('');
 
   useEffect(() => {
-    if (isSuccess) {
+    if (isSuccess && !isFetching) {
       setIcon(serviceData.icon);
       setService(serviceData.service);
       setServiceDesc(serviceData.serviceDesc);
     }
-  }, [isSuccess, serviceData]);
-
-  const canSave = [icon, service, serviceDesc].every(Boolean) && !isLoading;
-
-  const submitUpdateService = async () => {
-    if (canSave) {
-      await updateService({ id: serviceId, icon, service, serviceDesc });
-    }
-  };
+  }, [
+    isFetching,
+    isSuccess,
+    serviceData?.icon,
+    serviceData?.service,
+    serviceData?.serviceDesc,
+  ]);
 
   return (
     <Container className='my-5'>
       <Form
         onSubmit={(e) => {
           e.preventDefault();
-          submitUpdateService();
 
           updateServiceInDatabase(
             setLoading,
@@ -63,6 +55,7 @@ const EditServiceForm = () => {
             serviceDesc
           );
           refetch();
+          navigate('/about');
         }}
       >
         <Form.Group className='mb-3'>

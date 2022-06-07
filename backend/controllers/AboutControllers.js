@@ -82,9 +82,9 @@ exports.addService = AsyncHandler(async (req, res, next) => {
 
 // Get Service By Id
 exports.getServiceById = AsyncHandler(async (req, res, next) => {
-  const { id, serviceId } = req.params;
+  const { aboutId, serviceId } = req.params;
 
-  let about = await About.findById(id);
+  let about = await About.findById(aboutId);
 
   if (!about) return next(new ErrorHandler(404, 'About Not Found'));
 
@@ -98,9 +98,9 @@ exports.getServiceById = AsyncHandler(async (req, res, next) => {
 // Update One Service
 exports.updateService = AsyncHandler(async (req, res, next) => {
   const { icon, service, serviceDesc } = req.body;
-  const { id, serviceId } = req.params;
+  const { aboutId, serviceId } = req.params;
 
-  const about = await About.findById(id);
+  const about = await About.findById(aboutId);
 
   if (!about)
     return next(new ErrorHandler(404, `This About Id ${id} not found`));

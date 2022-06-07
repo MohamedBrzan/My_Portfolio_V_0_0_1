@@ -13,16 +13,6 @@ const FrontendTechsSlice = createApi({
       query: (id) => `${id}`,
     }),
 
-    addFrontendTech: builder.mutation({
-      query: (id, data) => `/about/${id}/frontend/tech`,
-      method: 'POST',
-      data: (data) => ({
-        frontendTech: data.frontendTech,
-        frontendTechProgress: data.frontendTechProgress,
-        frontendTechVariant: data.frontendTechVariant,
-      }),
-    }),
-
     updateFrontendTech: builder.mutation({
       query: (data) => ({
         url: `/about/${data.aboutId}/frontend/tech`,
@@ -36,7 +26,6 @@ const FrontendTechsSlice = createApi({
 export const {
   useGetAllFrontendTechsQuery,
   useGetFrontendTechByIdQuery,
-  useAddFrontendTechMutation,
   useUpdateFrontendTechMutation,
 } = FrontendTechsSlice;
 
