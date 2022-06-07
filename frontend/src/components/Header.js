@@ -3,6 +3,7 @@ import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Button from 'react-bootstrap/Button';
 import { LinkContainer } from 'react-router-bootstrap';
+import NavDropdown from 'react-bootstrap/NavDropdown';
 
 const Header = () => {
   return (
@@ -33,7 +34,27 @@ const Header = () => {
             </LinkContainer>
             <LinkContainer to='/contact'>
               <Nav.Link>contact</Nav.Link>
-            </LinkContainer>
+            </LinkContainer>{' '}
+            <NavDropdown title='Me'>
+              <LinkContainer to='/admin/edit/home-view'>
+                <NavDropdown.Item>home view</NavDropdown.Item>
+              </LinkContainer>
+              <LinkContainer to='/admin/edit/about-form'>
+                <NavDropdown.Item>about</NavDropdown.Item>
+              </LinkContainer>{' '}
+              <LinkContainer to='/admin/edit/experience-form'>
+                <NavDropdown.Item>experience</NavDropdown.Item>
+              </LinkContainer>
+              <LinkContainer to='/admin/edit/portfolio-form'>
+                <NavDropdown.Item>portfolio</NavDropdown.Item>
+              </LinkContainer>
+              <LinkContainer to='/admin/edit/contact-form'>
+                <NavDropdown.Item>contact</NavDropdown.Item>
+              </LinkContainer>
+            </NavDropdown>{' '}
+            <LinkContainer to='/admin'>
+              <Nav.Link>admin</Nav.Link>
+            </LinkContainer>{' '}
           </Nav>
           <Nav className='ms-auto'>
             <Button>

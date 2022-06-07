@@ -8,6 +8,13 @@ exports.getPortfolio = AsyncHandler(async (req, res, next) => {
   res.status(200).json(portfolio);
 });
 
+// Create Portfolio
+exports.createPortfolio = AsyncHandler(async (req, res, next) => {
+  const { image, title, description, link } = req.body;
+  const portfolio = await Portfolio.create({ image, title, description, link });
+  res.status(201).json(portfolio);
+});
+
 // Get Portfolio by ID
 exports.getPortfolioById = AsyncHandler(async (req, res, next) => {
   const portfolio = await Portfolio.findById(req.params.id);
@@ -18,13 +25,6 @@ exports.getPortfolioById = AsyncHandler(async (req, res, next) => {
     );
 
   res.status(200).json(portfolio);
-});
-
-// Create Portfolio
-exports.createPortfolio = AsyncHandler(async (req, res, next) => {
-  const { img, title, description, link } = req.body;
-  const portfolio = await Portfolio.create({ img, title, description, link });
-  res.status(201).json(portfolio);
 });
 
 // Update Portfolio

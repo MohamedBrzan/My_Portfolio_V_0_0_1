@@ -2,49 +2,111 @@ const mongoose = require('mongoose');
 
 const AboutSchema = new mongoose.Schema(
   {
-    title: { type: String, required: true, unique: true },
+    title: {
+      firstPart: { type: String, required: true, unique: true },
+      coloredPart: { type: String, required: true, unique: true },
+      lastPart: { type: Array, required: true, unique: true },
+    },
     description: { type: String, required: true, unique: true },
-    img: { type: String, required: true },
+    image: { type: String, required: true },
+    button: {
+      text: {
+        type: String,
+        required: true,
+        unique: true,
+        default: 'Download CV',
+      },
+      variant: {
+        type: String,
+        required: true,
+        unique: true,
+        default: 'secondary',
+      },
+    },
+
+    services: [
+      {
+        icon: { type: String, unique: true, required: true },
+        service: { type: String, unique: true, required: true },
+        serviceDesc: { type: String, unique: true, required: true },
+      },
+    ],
+
     skills: {
       frontend: {
-        name: {
+        title: {
           type: String,
           unique: true,
           default: 'Frontend skills',
           required: true,
         },
+        frameworks: [
+          {
+            frontendFramework: { type: String, unique: true, required: true },
+            frontendFrameworkProgress: {
+              type: Number,
+              default: 0,
+              required: true,
+            },
+            frontendFrameworkVariant: {
+              type: String,
+              default: 'primary',
+              required: true,
+            },
+          },
+        ],
         techs: [
           {
-            name: { type: String, unique: true, required: true },
-            value: { type: Number, default: 0, required: true },
+            frontendTech: { type: String, unique: true, required: true },
+            frontendTechProgress: { type: Number, default: 0, required: true },
+            frontendTechVariant: {
+              type: String,
+              default: 'primary',
+              required: true,
+            },
           },
         ],
       },
       backend: {
-        name: {
+        title: {
           type: String,
           unique: true,
           default: 'backend techs',
           required: true,
         },
+        frameworks: [
+          {
+            backendFramework: { type: String, unique: true, required: true },
+            backendFrameworkProgress: {
+              type: Number,
+              default: 0,
+              required: true,
+            },
+            backendFrameworkVariant: {
+              type: String,
+              default: 'primary',
+              required: true,
+            },
+          },
+        ],
         techs: [
           {
-            name: { type: String, unique: true, required: true },
-            value: { type: Number, default: 0, required: true },
+            backendTech: { type: String, unique: true, required: true },
+            backendTechProgress: { type: Number, default: 0, required: true },
+            backendTechVariant: {
+              type: String,
+              default: 'primary',
+              required: true,
+            },
           },
         ],
       },
     },
-    services: [
-      {
-        name: { type: String, unique: true, required: true },
-        description: { type: String, unique: true, required: true },
-      },
-    ],
+
     devtools: [
       {
-        name: { type: String, unique: true, required: true },
-        img: { type: String, unique: true, required: true },
+        tool: { type: String, unique: true, required: true },
+        image: { type: String, unique: true, required: true },
       },
     ],
   },

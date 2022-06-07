@@ -1,0 +1,15 @@
+.about-form {
+  margin: 15px 0;
+}
+.about-form .image-container {
+  position: relative;
+}
+.about-form .image-container img {
+  width: 100%;
+  height: auto;
+}
+.about-form .image-container .delete-btn {
+  position: absolute;
+  top: 0;
+  right: 0;
+}/*# sourceMappingURL=AboutForms.css.map */

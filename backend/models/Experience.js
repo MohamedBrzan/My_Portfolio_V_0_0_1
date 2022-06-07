@@ -7,7 +7,7 @@ const ExperienceSchema = new mongoose.Schema(
     experience: [
       {
         image: { type: String, required: true },
-        description: { type: String, required: true },
+        experience: { type: String, required: true },
       },
     ],
   },

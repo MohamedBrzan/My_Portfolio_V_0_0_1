@@ -4,8 +4,23 @@ import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import './Contact.css';
+import { useGetContactDataQuery } from '../../store/apis/ContactSlice';
 
 const Contact = () => {
+  const { data, isLoading, isSuccess, isError, error } =
+    useGetContactDataQuery();
+
+  let content;
+
+  if (isLoading) {
+    content = <div>Loading...</div>;
+  } else if (isSuccess) {
+    content = <div>Data...</div>;
+    console.log(data);
+  } else if (isError) {
+    content = <div>{error.toString()}</div>;
+  }
+
   const handleSubmit = async (e) => {
     try {
       e.preventDefault();
@@ -43,7 +58,8 @@ const Contact = () => {
 
   return (
     <Container className='mt-5 contact'>
-      <div className='text-center mb-5'>
+      {content}
+      {/* <div className='text-center mb-5'>
         <h2>
           contact <span className='intro-title'>me</span>
         </h2>
@@ -95,7 +111,7 @@ const Contact = () => {
 
           <div className='overlay'></div>
         </Col>
-      </Row>
+      </Row> */}
     </Container>
   );
 };

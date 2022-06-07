@@ -4,11 +4,27 @@ import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import './Experience.css';
+import { useGetExperienceDataQuery } from '../../store/apis/ExperienceSlice';
 
 const Experience = () => {
+  const { data, isLoading, isSuccess, isError, error } =
+    useGetExperienceDataQuery();
+
+  let content;
+
+  if (isLoading) {
+    content = <div>Loading...</div>;
+  } else if (isSuccess) {
+    content = <div>Data...</div>;
+    console.log(data);
+  } else if (isError) {
+    content = <div>{error.toString()}</div>;
+  }
+
   return (
     <Container className='mt-5 text-center experience'>
-      <div className='text-center mb-5'>
+      {content}
+      {/* <div className='text-center mb-5'>
         <h2>
           <span className='intro-title'>my</span> experience
         </h2>
@@ -31,7 +47,7 @@ const Experience = () => {
             </div>
           </div>
         </Col>
-      </Row>
+      </Row> */}
     </Container>
   );
 };

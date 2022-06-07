@@ -30,6 +30,35 @@ const Intro = () => {
     },
   ];
 
+  const uploadImages = () => {
+    const files = document.getElementsById('file').files;
+    const preview = document.getElementById('preview');
+
+    const checkFilesName = (files) => {
+      if (/\.(png|jpe?g|gif|svg)$/.test(files.name)) {
+        const reader = new FileReader();
+
+        reader.addEventListener(
+          'load',
+          () => {
+            let image = new Image();
+            image.height = 100;
+            image.title = files.name;
+            image.src = this.result;
+            preview.appendChild(image);
+            console.log(this.result);
+          },
+          false
+        );
+
+        reader.readAsDataURL();
+      }
+    };
+    if (files) {
+      [].forEach.call(files, checkFilesName);
+    }
+  };
+
   return (
     <article className='home'>
       <div className='intro'>

@@ -1,0 +1,15 @@
+.experience-form {
+  margin: 15px 0;
+}
+.experience-form .image-container {
+  position: relative;
+}
+.experience-form .image-container img {
+  width: 100%;
+  height: auto;
+}
+.experience-form .image-container .delete-btn {
+  position: absolute;
+  top: 0;
+  right: 0;
+}/*# sourceMappingURL=ExperienceForm.css.map */

@@ -1,0 +1,14 @@
+.about-intro-form .image-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+.about-intro-form .image-container img {
+  width: 100%;
+  height: 100%;
+}
+.about-intro-form .image-container .delete-btn {
+  position: absolute;
+  top: 0;
+  right: 0px;
+}/*# sourceMappingURL=AboutIntroForm.css.map */

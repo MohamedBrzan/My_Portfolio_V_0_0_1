@@ -11,21 +11,36 @@ exports.getHomeView = AsyncHandler(async (req, res, next) => {
 
 // Create A New HomeView
 exports.createNewHomeView = AsyncHandler(async (req, res, next) => {
-  const { title, description } = req.body;
+  const { description, frontendImages, backendImages } = req.body;
 
-  const homeView = await HomeView.create({ title, description });
+  const title = {
+    firstPart: req.body.title.firstPart,
+    coloredPart:req.body.title.coloredPart,
+    lastPart: req.body.title.lastPart,
+  };
+
+  const homeView = await HomeView.create({
+    title,
+    description,
+    frontendImages,
+    backendImages,
+  });
 
   res.status(201).json(homeView);
 });
 
 // Update HomeView
 exports.updateHomeView = AsyncHandler(async (req, res, next) => {
-  const { title, description } = req.body;
+  const { title, description, frontendImage, backendImages } = req.body;
 
   const homeView = await HomeView.findByIdAndUpdate(
     req.params.id,
-    title,
-    description,
+    {
+      title,
+      description,
+      frontendImage,
+      backendImages,
+    },
     {
       new: true,
       runValidators: true,

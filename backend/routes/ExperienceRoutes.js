@@ -3,25 +3,27 @@ const {
   getExperience,
   createExperience,
   addExperience,
-  SetAllExperience,
   updateOneExperience,
+  deleteExperience,
+  updateExperience,
 } = require('../controllers/ExperienceControllers');
 const Authentication = require('../middleWares/Authentication');
 const router = express.Router();
 
 // Get Experience & Create New Experience
 
-router.route('/').get(getExperience).post(Authentication, createExperience);
+router.route('/').get(getExperience).post(createExperience);
 
-// Add Experience & Update And Set All Experience
+// Update Experience
+
+router.route('/:id').put(updateExperience);
+
+// Add Experience & Update Experience & Delete Experience
 
 router
-  .route('/:id')
-  .post(Authentication, addExperience)
-  .put(Authentication, SetAllExperience);
-
-// Update One Experience
-
-router.route('/:id/:experienceId').put(Authentication, updateOneExperience);
+  .route('/:id/experience')
+  .post(addExperience)
+  .put(updateOneExperience)
+  .delete(deleteExperience);
 
 module.exports = router;

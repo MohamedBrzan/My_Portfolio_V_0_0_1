@@ -3,12 +3,28 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
+import { useGetPortfolioDataQuery } from '../../store/apis/PortfolioSlice';
 import './Portfolio.css';
 
 const Portfolio = () => {
+  const { data, isLoading, isSuccess, isError, error } =
+    useGetPortfolioDataQuery();
+
+  let content;
+
+  if (isLoading) {
+    content = <div>Loading...</div>;
+  } else if (isSuccess) {
+    content = <div>Data...</div>;
+    console.log(data)
+  } else if (isError) {
+    content = <div>{error.toString()}</div>;
+  }
+
   return (
     <Container className='mt-5 text-center portfolio'>
-      <div className='text-center mb-5'>
+      {content}
+      {/* <div className='text-center mb-5'>
         <h2>
           <span className='intro-title'>my</span> portfolio
         </h2>
@@ -38,7 +54,7 @@ const Portfolio = () => {
             </Card.Body>
           </Card>
         </Col>
-      </Row>
+      </Row> */}
     </Container>
   );
 };
