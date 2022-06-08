@@ -8,20 +8,24 @@ import Portfolio from '../pages/Portfolio/Portfolio';
 import Experience from '../pages/Experience/Experience';
 import Contact from '../pages/Contact/Contact';
 import Button from 'react-bootstrap/Button';
-import Home from '../admin/AdminPage/AdminPage';
 import AboutIntroForm from '../admin/views/AboutIntroForm/AboutIntroForm';
 import EditDevToolForm from '../admin/views/DevToolForm/EditDevToolForm';
-import ExperienceForm from '../admin/views/ExperienceForm/ExperienceForm';
-import PortfolioForm from '../admin/views/PortfolioForm/PortfolioForm';
-import ContactForm from '../admin/views/ContactForm/ContactForm';
 import EditServiceForm from '../admin/views/ServiceForm/EditServiceForm';
 import AddServiceForm from '../admin/views/ServiceForm/AddServiceForm';
-import AddingSkillsForm from '../admin/views/AddingSkillsForm/AddingSkillsForm';
-import EditFrontendTechForm from '../admin/views/AddingSkillsForm/EditFrontendTechForm';
+import AddingSkillsForm from '../admin/views/SkillsForm/AddingSkillsForm';
+import EditFrontendTechForm from '../admin/views/SkillsForm/EditFrontendTechForm';
 import EditFrontendFrameworkForm from '../admin/views/FrameworkForm/EditFrontendFrameworkForm';
-import EditBackendTechForm from '../admin/views/AddingSkillsForm/EditBackendTechForm';
+import EditBackendTechForm from '../admin/views/SkillsForm/EditBackendTechForm';
 import EditBackendFrameworkForm from '../admin/views/FrameworkForm/EditBackendFrameworkForm';
 import AddDevToolForm from '../admin/views/DevToolForm/AddDevToolForm';
+import AddExperienceForm from '../admin/views/ExperienceForm/AddExperienceForm';
+import EditProgrammingExpForm from '../admin/views/ExperienceForm/EditProgrammingExpForm';
+import EditOtherExpForm from '../admin/views/ExperienceForm/EditOtherExpForm';
+import AddPortfolioProjectForm from '../admin/views/PortfolioForm/AddPortfolioProjectForm';
+import EditFrontendProjectForm from '../admin/views/PortfolioForm/EditFrontendProjectForm';
+import EditBackendProjectForm from '../admin/views/PortfolioForm/EditBackendProjectForm';
+import EditFullStackProjectForm from '../admin/views/PortfolioForm/EditFullStackProjectForm';
+import EditContactForm from '../admin/views/ContactForm/EditContactForm';
 
 const Layout = () => {
   const ScrollToUp = useRef();
@@ -101,21 +105,42 @@ const Layout = () => {
                 />
               </Route>
 
-              <Route path='experience' element={<Experience />} />
-
-              <Route path='portfolio' element={<Portfolio />} />
-
-              <Route path='contact' element={<Contact />} />
-
-              <Route path='admin/'>
-                <Route index element={<Home />} />
-                <Route path='edit/home-view' element={<AboutIntroForm />} />
+              <Route path='experience/'>
+                <Route index element={<Experience />} />
                 <Route
-                  path='edit/experience-form'
-                  element={<ExperienceForm />}
+                  path='add/experience/:id'
+                  element={<AddExperienceForm />}
                 />
-                <Route path='edit/portfolio-form' element={<PortfolioForm />} />
-                <Route path='edit/contact-form' element={<ContactForm />} />
+                <Route
+                  path='edit/:id/programming/:experienceId'
+                  element={<EditProgrammingExpForm />}
+                />{' '}
+                <Route
+                  path='edit/:id/other/:experienceId'
+                  element={<EditOtherExpForm />}
+                />
+              </Route>
+
+              <Route path='portfolio/'>
+                <Route index element={<Portfolio />} />
+                <Route path='add/:id' element={<AddPortfolioProjectForm />} />
+                <Route
+                  path='edit/:id/frontend/:projectId'
+                  element={<EditFrontendProjectForm />}
+                />{' '}
+                <Route
+                  path='edit/:id/backend/:projectId'
+                  element={<EditBackendProjectForm />}
+                />{' '}
+                <Route
+                  path='edit/:id/fullStack/:projectId'
+                  element={<EditFullStackProjectForm />}
+                />
+              </Route>
+
+              <Route path='contact/'>
+                <Route index element={<Contact />} />
+                <Route path='edit/:id' element={<EditContactForm />} />
               </Route>
             </Route>
           </Routes>

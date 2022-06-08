@@ -1,8 +1,55 @@
 .experience {
   margin: 0 auto 20px;
+  position: relative;
 }
 .experience span.intro-title {
   color: fuchsia;
+}
+.experience .mini-edit-btn,
+.experience .mini-delete-btn {
+  font-size: 1rem;
+  cursor: pointer;
+  margin: 1px auto;
+  max-width: 100px;
+  background-color: #404040;
+  opacity: 0;
+}
+.experience .add-btn {
+  position: absolute;
+  top: 0;
+  right: 0;
+  padding: 8px;
+  opacity: 0;
+  font-size: 2rem;
+  background-color: #000;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  width: 50px;
+  height: 50px;
+  align-items: center;
+  border: 1px solid #fff;
+  border-radius: 50%;
+}
+.experience .add-btn:hover {
+  transition: all 0.3s ease-in-out;
+  background-color: violet;
+}
+.experience:hover .add-btn {
+  opacity: 1;
+}
+.experience .programming-exp:hover .mini-edit-btn,
+.experience .programming-exp:hover .mini-delete-btn {
+  opacity: 1;
+}
+.experience .mini-edit-btn,
+.experience .edit-btn {
+  color: violet;
+}
+.experience .mini-delete-btn,
+.experience .delete-btn {
+  color: crimson;
 }
 .experience .card {
   height: 200px;
@@ -19,9 +66,18 @@
   transition: all 0.5s ease-in-out;
 }
 .experience .card .text {
-  transition: all 0.5s linear;
+  transition: all 0.5s ease-in-out;
   position: absolute;
   bottom: -200px;
+  width: 100%;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  flex-wrap: nowrap;
+  padding: 5px;
+  word-spacing: 8px;
+  letter-spacing: 1px;
+  line-height: 1.6;
 }
 .experience .card:hover .text {
   bottom: 2px;

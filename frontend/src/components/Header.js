@@ -35,33 +35,13 @@ const Header = () => {
             <LinkContainer to='/contact'>
               <Nav.Link>contact</Nav.Link>
             </LinkContainer>{' '}
-            <NavDropdown title='Me'>
-              <LinkContainer to='/admin/edit/home-view'>
-                <NavDropdown.Item>home view</NavDropdown.Item>
-              </LinkContainer>
-              <LinkContainer to='/admin/edit/about-form'>
-                <NavDropdown.Item>about</NavDropdown.Item>
-              </LinkContainer>{' '}
-              <LinkContainer to='/admin/edit/experience-form'>
-                <NavDropdown.Item>experience</NavDropdown.Item>
-              </LinkContainer>
-              <LinkContainer to='/admin/edit/portfolio-form'>
-                <NavDropdown.Item>portfolio</NavDropdown.Item>
-              </LinkContainer>
-              <LinkContainer to='/admin/edit/contact-form'>
-                <NavDropdown.Item>contact</NavDropdown.Item>
-              </LinkContainer>
-            </NavDropdown>{' '}
-            <LinkContainer to='/admin'>
-              <Nav.Link>admin</Nav.Link>
-            </LinkContainer>{' '}
           </Nav>
           <Nav className='ms-auto'>
-            <Button>
+            {/* <Button>
               <small>
                 <b>Download My CV</b>
               </small>
-            </Button>
+            </Button> */}
           </Nav>
         </Navbar.Collapse>
       </Container>

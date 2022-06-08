@@ -9,6 +9,8 @@ const {
   deleteOtherExperience,
   createExperience,
   updateExperienceTitles,
+  getProgrammingExperienceById,
+  getOtherExperienceById,
 } = require('../controllers/ExperienceControllers');
 const Authentication = require('../middleWares/Authentication');
 const router = express.Router();
@@ -25,10 +27,11 @@ router.route('/:id').put(updateExperienceTitles);
 
 router.route('/:id/programming').post(createProgrammingExperience);
 
-// Update & Delete Programming Experience
+// Update & Delete Programming Experience & Get Experience By Id
 
 router
   .route('/:id/programming/:experienceId')
+  .get(getProgrammingExperienceById)
   .put(updateProgrammingExperience)
   .delete(deleteProgrammingExperience);
 
@@ -36,10 +39,11 @@ router
 
 router.route('/:id/other').post(createOtherExperience);
 
-// Update & Delete Other Experience
+// Update & Delete Other Experience & Get Experience By Id
 
 router
   .route('/:id/other/:experienceId')
+  .get(getOtherExperienceById)
   .put(updateOtherExperience)
   .delete(deleteOtherExperience);
 

@@ -3,9 +3,9 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import Card from 'react-bootstrap/Card';
 import { useState } from 'react';
-import './ContactForm.css';
+import './EditContactForm.css';
 
-const ContactForm = () => {
+const EditContactForm = () => {
   const [loading, setLoading] = useState(false);
 
   const [name, setName] = useState('');
@@ -78,4 +78,4 @@ const ContactForm = () => {
   );
 };
 
-export default ContactForm;
+export default EditContactForm;

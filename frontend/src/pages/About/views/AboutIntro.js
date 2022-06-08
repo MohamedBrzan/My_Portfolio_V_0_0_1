@@ -17,7 +17,7 @@ const AboutIntro = ({ about }) => {
             {about.title.lastPart}
           </h3>
           <h5 className='introduction'>{about.description}</h5>
-          <Button variant={about.button.variant}>{about.button.text}</Button>
+          {/* <Button variant={about.button.variant}>{about.button.text}</Button> */}
         </>
       </Col>
       <Col md={6} className='col-order mb-3'>

@@ -13,7 +13,6 @@ const ExperienceSchema = new mongoose.Schema(
         {
           image: { type: String, required: true },
           title: { type: String, required: true },
-          description: { type: String, required: true },
           experience: { type: String, required: true },
         },
       ],
@@ -25,7 +24,6 @@ const ExperienceSchema = new mongoose.Schema(
         {
           image: { type: String, required: true },
           title: { type: String, required: true },
-          description: { type: String, required: true },
           experience: { type: String, required: true },
         },
       ],

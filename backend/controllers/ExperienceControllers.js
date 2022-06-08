@@ -42,10 +42,29 @@ exports.updateExperienceTitles = AsyncHandler(async (req, res, next) => {
   return res.status(200).json(experience);
 });
 
+// Get Programming Experience By Id
+exports.getProgrammingExperienceById = AsyncHandler(async (req, res, next) => {
+  const { id, experienceId } = req.params;
+
+  const experience = await Experience.findById(id);
+
+  if (!experience) return next(new ErrorHandler(404, 'Experience Not Found'));
+
+  const findExperience = experience.programming.experience.find(
+    (experience) => experience._id.toString() === experienceId
+  );
+
+  if (findExperience) {
+    return res.status(200).json(findExperience);
+  } else {
+    return next(new ErrorHandler(404, 'Experience Not Found'));
+  }
+});
+
 // Create Programming Experience
 exports.createProgrammingExperience = AsyncHandler(async (req, res, next) => {
   const { id } = req.params;
-  const { image, title, description, experience } = req.body;
+  const { image, title, experience } = req.body;
 
   let theExperience = await Experience.findById(id);
 
@@ -55,7 +74,6 @@ exports.createProgrammingExperience = AsyncHandler(async (req, res, next) => {
   const programming = {
     image,
     title,
-    description,
     experience,
   };
 
@@ -66,10 +84,29 @@ exports.createProgrammingExperience = AsyncHandler(async (req, res, next) => {
   res.status(201).json(theExperience);
 });
 
+// Get Other Experience By Id
+exports.getOtherExperienceById = AsyncHandler(async (req, res, next) => {
+  const { id, experienceId } = req.params;
+
+  const experience = await Experience.findById(id);
+
+  if (!experience) return next(new ErrorHandler(404, 'Experience Not Found'));
+
+  const findExperience = experience.other.experience.find(
+    (experience) => experience._id.toString() === experienceId
+  );
+
+  if (findExperience) {
+    return res.status(200).json(findExperience);
+  } else {
+    return next(new ErrorHandler(404, 'Experience Not Found'));
+  }
+});
+
 // Create Other Experience
 exports.createOtherExperience = AsyncHandler(async (req, res, next) => {
   const { id } = req.params;
-  const { image, title, description, experience } = req.body;
+  const { image, title, experience } = req.body;
 
   let theExperience = await Experience.findById(id);
 
@@ -79,7 +116,7 @@ exports.createOtherExperience = AsyncHandler(async (req, res, next) => {
   const other = {
     image,
     title,
-    description,
+
     experience,
   };
 
@@ -93,7 +130,7 @@ exports.createOtherExperience = AsyncHandler(async (req, res, next) => {
 // Update Programming Experience
 exports.updateProgrammingExperience = AsyncHandler(async (req, res, next) => {
   const { id, experienceId } = req.params;
-  const { image, experience, title, description } = req.body;
+  const { image, experience, title } = req.body;
 
   const theExperience = await Experience.findById(id);
 
@@ -107,7 +144,6 @@ exports.updateProgrammingExperience = AsyncHandler(async (req, res, next) => {
   if (findProgrammingExperience) {
     findProgrammingExperience.image = image;
     findProgrammingExperience.title = title;
-    findProgrammingExperience.description = description;
     findProgrammingExperience.experience = experience;
 
     await theExperience.save();
@@ -123,7 +159,7 @@ exports.updateProgrammingExperience = AsyncHandler(async (req, res, next) => {
 // Update Other Experience
 exports.updateOtherExperience = AsyncHandler(async (req, res, next) => {
   const { id, experienceId } = req.params;
-  const { image, experience, title, description } = req.body;
+  const { image, experience, title } = req.body;
 
   const theExperience = await Experience.findById(id);
 
@@ -137,7 +173,6 @@ exports.updateOtherExperience = AsyncHandler(async (req, res, next) => {
   if (findOtherExperience) {
     findOtherExperience.image = image;
     findOtherExperience.title = title;
-    findOtherExperience.description = description;
     findOtherExperience.experience = experience;
 
     await theExperience.save();

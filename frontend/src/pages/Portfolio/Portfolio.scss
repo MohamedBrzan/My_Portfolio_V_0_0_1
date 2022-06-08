@@ -2,6 +2,8 @@
 
 .portfolio {
   margin: 0 auto 20px;
+  position: relative;
+
   span.intro-title {
     color: $main-color;
   }
@@ -15,6 +17,63 @@
       letter-spacing: 2px;
       word-spacing: 5px;
       line-height: 1.6;
+    }
+  }
+
+  .add-btn {
+    position: absolute;
+    top: 0;
+    right: 0;
+    padding: 8px;
+    opacity: 0;
+    font-size: 2rem;
+    width: 50px;
+    height: 50px;
+    background-color: #000;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    border: 1px solid #fff;
+    border-radius: 50%;
+    &:hover {
+      transition: all 0.3s ease-in-out;
+      background-color: violet;
+    }
+  }
+  &:hover {
+    .add-btn {
+      opacity: 1;
+    }
+  }
+
+  .mini-edit-btn,
+  .mini-delete-btn {
+    font-size: 1rem;
+    cursor: pointer;
+    margin: 3px;
+    background-color: #404040;
+    text-align: center;
+    opacity: 0;
+  }
+
+  .mini-edit-btn,
+  .edit-btn {
+    color: violet;
+  }
+
+  .mini-delete-btn,
+  .delete-btn {
+    color: crimson;
+  }
+
+  .project {
+    &:hover {
+      .mini-edit-btn,
+      .mini-delete-btn {
+        opacity: 1;
+      }
     }
   }
 
