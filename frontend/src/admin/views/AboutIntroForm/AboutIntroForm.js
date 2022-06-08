@@ -3,24 +3,16 @@ import Container from 'react-bootstrap/Container';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import { useNavigate, useParams } from 'react-router-dom';
-import { useGetAboutByIdQuery } from '../../../store/apis/AboutSlice';
 import { UpdateAbout } from '../apis/AboutApi';
+import { useGetAboutDataQuery } from '../../../store/apis/AboutSlice';
 import './AboutIntroForm.css';
+import axios from 'axios';
 
 const AboutIntroForm = () => {
   const navigate = useNavigate();
-  const { id } = useParams();
+  const { aboutId } = useParams();
 
-  const aboutId = id;
-
-  const {
-    data: aboutDetails,
-    isFetching,
-    isSuccess,
-    error,
-  } = useGetAboutByIdQuery(id);
-
-  // const aboutDetails = useSelector((state) => state.AboutReducer);
+  const { refetch } = useGetAboutDataQuery();
 
   const [loading, setLoading] = useState(false);
   const [firstPart, setFirstPart] = useState('');
@@ -49,159 +41,161 @@ const AboutIntroForm = () => {
   };
 
   useEffect(() => {
-    if (isSuccess) {
-      setFirstPart(aboutDetails.title.firstPart);
-      setColoredPart(aboutDetails.title.coloredPart);
-      setLastPart(aboutDetails.title.lastPart);
-      setDescription(aboutDetails.description);
-      setIntroImage(aboutDetails.image);
-      setText(aboutDetails.button.text);
-      setVariant(aboutDetails.button.variant);
-    }
-  }, [
-    aboutDetails?.button.text,
-    aboutDetails?.button.variant,
-    aboutDetails?.description,
-    aboutDetails?.image,
-    aboutDetails?.title.coloredPart,
-    aboutDetails?.title.firstPart,
-    aboutDetails?.title.lastPart,
-    isSuccess,
-  ]);
+    const fetchAboutData = async () => {
+      try {
+        const { data } = await axios({
+          method: 'get',
+          url: `http://localhost:5000/api/v1/about/${aboutId}`,
+        });
+        setFirstPart(data.title.firstPart);
+        setColoredPart(data.title.coloredPart);
+        setLastPart(data.title.lastPart);
+        setDescription(data.description);
+        setIntroImage(data.image);
+        setText(data.button.text);
+        setVariant(data.button.variant);
+      } catch (error) {
+        console.log(error.message);
+      }
+    };
+    fetchAboutData();
+  }, [aboutId]);
 
   return (
     <Container className='about-intro-form'>
       <h1>about intro form</h1>
-      {isFetching ? (
-        <p className='text-info'>Please Waiting .....</p>
-      ) : isSuccess ? (
-        <Form
-          onSubmit={(e) => {
-            e.preventDefault();
-            UpdateAbout(
-              setLoading,
-              aboutId,
-              firstPart,
-              coloredPart,
-              lastPart,
-              description,
-              introImage,
-              text,
-              variant,
-              navigate
-            );
-          }}
-        >
-          <Form.Group className='mb-3'>
-            <Form.Label>
-              <strong>first part</strong>
-            </Form.Label>
-            <Form.Control
-              type='text'
-              value={firstPart}
-              placeholder='First Part'
-              disabled={loading}
-              onChange={(e) => setFirstPart(e.target.value)}
-              required
-            />
-          </Form.Group>
-          <Form.Group className='mb-3'>
-            <Form.Label>
-              <strong>colored part</strong>
-            </Form.Label>
-            <Form.Control
-              type='text'
-              value={coloredPart}
-              placeholder='Colored Part'
-              disabled={loading}
-              onChange={(e) => setColoredPart(e.target.value)}
-              required
-            />
-          </Form.Group>
-          <Form.Group className='mb-3'>
-            <Form.Label>
-              <strong>last part</strong>
-            </Form.Label>
-            <Form.Control
-              type='text'
-              value={lastPart}
-              placeholder='Last Part'
-              disabled={loading}
-              onChange={(e) => setLastPart(e.target.value)}
-              required
-            />
-          </Form.Group>
-          <Form.Group className='mb-3'>
-            <Form.Label>
-              <strong>description</strong>
-            </Form.Label>
-            <Form.Control
-              as={'textarea'}
-              rows={8}
-              value={description}
-              placeholder='Description'
-              disabled={loading}
-              onChange={(e) => setDescription(e.target.value)}
-              required
-            />
-          </Form.Group>
-          <Form.Group className='mb-3'>
-            <Form.Label>
-              <strong>button</strong>
-            </Form.Label>
-            <Form.Control
-              className='mb-3'
-              type='text'
-              value={text}
-              placeholder='Button Text'
-              disabled={loading}
-              onChange={(e) => setText(e.target.value)}
-              required
-            />{' '}
-            <Form.Control
-              type='variant'
-              value={variant}
-              placeholder='Button variant'
-              disabled={loading}
-              onChange={(e) => setVariant(e.target.value)}
-              required
-            />
-          </Form.Group>
-          <Form.Group className='mb-3'>
-            <Form.Label>
-              <strong>image</strong>
-            </Form.Label>
-            <Form.Control
-              type='file'
-              id='intro-image'
-              onChange={uploadIntroImage}
-              disabled={loading}
-            />
-          </Form.Group>
-          {introImage && (
-            <div className='image-container'>
-              <img src={introImage} alt='introImage' />
-              <Button
-                variant='danger'
-                onClick={() => setIntroImage('')}
-                className='delete-btn my-3'
-              >
-                <i className='fa-solid fa-trash-can'></i>
-              </Button>
-            </div>
-          )}
-          <Button
-            className='my-3'
-            type='submit'
-            variant='secondary'
+
+      <Form
+        onSubmit={(e) => {
+          e.preventDefault();
+
+          if (introImage === '') {
+            alert('Please upload an image');
+            return;
+          }
+
+          UpdateAbout(
+            setLoading,
+            aboutId,
+            firstPart,
+            coloredPart,
+            lastPart,
+            description,
+            introImage,
+            text,
+            variant,
+            navigate
+          );
+          refetch();
+        }}
+      >
+        <Form.Group className='mb-3'>
+          <Form.Label>
+            <strong>first part</strong>
+          </Form.Label>
+          <Form.Control
+            type='text'
+            value={firstPart}
+            placeholder='First Part'
             disabled={loading}
-          >
-            Upload
-          </Button>
-        </Form>
-      ) : (
-        <p className='text-danger'>{error}</p>
-      )}
+            onChange={(e) => setFirstPart(e.target.value)}
+            required
+          />
+        </Form.Group>
+        <Form.Group className='mb-3'>
+          <Form.Label>
+            <strong>colored part</strong>
+          </Form.Label>
+          <Form.Control
+            type='text'
+            value={coloredPart}
+            placeholder='Colored Part'
+            disabled={loading}
+            onChange={(e) => setColoredPart(e.target.value)}
+            required
+          />
+        </Form.Group>
+        <Form.Group className='mb-3'>
+          <Form.Label>
+            <strong>last part</strong>
+          </Form.Label>
+          <Form.Control
+            type='text'
+            value={lastPart}
+            placeholder='Last Part'
+            disabled={loading}
+            onChange={(e) => setLastPart(e.target.value)}
+            required
+          />
+        </Form.Group>
+        <Form.Group className='mb-3'>
+          <Form.Label>
+            <strong>description</strong>
+          </Form.Label>
+          <Form.Control
+            as={'textarea'}
+            rows={8}
+            value={description}
+            placeholder='Description'
+            disabled={loading}
+            onChange={(e) => setDescription(e.target.value)}
+            required
+          />
+        </Form.Group>
+        <Form.Group className='mb-3'>
+          <Form.Label>
+            <strong>button</strong>
+          </Form.Label>
+          <Form.Control
+            className='mb-3'
+            type='text'
+            value={text}
+            placeholder='Button Text'
+            disabled={loading}
+            onChange={(e) => setText(e.target.value)}
+            required
+          />{' '}
+          <Form.Control
+            type='variant'
+            value={variant}
+            placeholder='Button variant'
+            disabled={loading}
+            onChange={(e) => setVariant(e.target.value)}
+            required
+          />
+        </Form.Group>
+        <Form.Group className='mb-3'>
+          <Form.Label>
+            <strong>image</strong>
+          </Form.Label>
+          <Form.Control
+            type='file'
+            id='intro-image'
+            onChange={uploadIntroImage}
+            disabled={loading}
+          />
+        </Form.Group>
+        {introImage && (
+          <div className='image-container'>
+            <img src={introImage} alt='introImage' />
+            <Button
+              variant='danger'
+              onClick={() => setIntroImage('')}
+              className='delete-btn my-3'
+            >
+              <i className='fa-solid fa-trash-can'></i>
+            </Button>
+          </div>
+        )}
+        <Button
+          className='my-3'
+          type='submit'
+          variant='secondary'
+          disabled={loading}
+        >
+          Upload
+        </Button>
+      </Form>
     </Container>
   );
 };

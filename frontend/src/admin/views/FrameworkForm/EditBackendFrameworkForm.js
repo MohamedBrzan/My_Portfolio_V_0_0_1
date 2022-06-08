@@ -4,20 +4,43 @@ import Form from 'react-bootstrap/Form';
 import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button';
 import { useGetAboutDataQuery } from '../../../store/apis/AboutSlice';
-import { useState } from 'react';
-import { updateBackendTech } from '../apis/TechsApi';
+import { useEffect, useState } from 'react';
+import { updateBackendFrameworkInDatabase } from '../apis/FrameworksApi';
 
-const EditBackendTechForm = () => {
+import axios from 'axios';
+
+const EditBackendFrameworkForm = () => {
   const [loading, setLoading] = useState(false);
-  const { aboutId } = useParams();
+  const { aboutId, frameworkId } = useParams();
 
   const navigate = useNavigate();
 
   const { refetch } = useGetAboutDataQuery();
 
-  const [backendTech, setBackendTech] = useState('');
-  const [backendTechProgress, setBackendTechProgress] = useState('50');
-  const [backendTechVariant, setBackendTechVariant] = useState('primary');
+  const [backendFramework, setBackendFramework] = useState('');
+  const [backendFrameworkProgress, setBackendFrameworkProgress] = useState('');
+  const [backendFrameworkVariant, setBackendFrameworkVariant] = useState('');
+
+  useEffect(() => {
+    const fetchingFrameworkData = async () => {
+      try {
+        setLoading(true);
+        const { data } = await axios({
+          mode: 'no-cors',
+          method: 'GET',
+          url: `http://localhost:5000/api/v1/about/${aboutId}/backend/${frameworkId}`,
+        });
+        setBackendFramework(data.backendFramework);
+        setBackendFrameworkProgress(data.backendFrameworkProgress);
+        setBackendFrameworkVariant(data.backendFrameworkVariant);
+        setLoading(false);
+      } catch (error) {
+        setLoading(false);
+        console.log(error.message);
+      }
+    };
+    fetchingFrameworkData();
+  }, [aboutId, frameworkId]);
 
   return (
     <Container className='my-5'>
@@ -26,42 +49,44 @@ const EditBackendTechForm = () => {
         <Form
           onSubmit={(e) => {
             e.preventDefault();
-            updateBackendTech(
+            updateBackendFrameworkInDatabase(
               setLoading,
               aboutId,
-              backendTech,
-              backendTechProgress,
-              backendTechVariant
+              frameworkId,
+              backendFramework,
+              backendFrameworkProgress,
+              backendFrameworkVariant
             );
             refetch();
+            navigate('/about');
           }}
         >
           <Card.Title className='mb-3 bg-warning p-3 rounded'>
-            <strong>frontend techs</strong>
+            <strong>backend Frameworks</strong>
           </Card.Title>
           <Form.Group className='mb-3'>
             <Form.Label>
-              <strong>tech name </strong>
+              <strong>Framework name </strong>
             </Form.Label>
             <Form.Control
               type='text'
-              value={backendTech}
+              value={backendFramework}
               placeholder='Enter Skill Name'
               disabled={loading}
-              onChange={(e) => setBackendTech(e.target.value)}
+              onChange={(e) => setBackendFramework(e.target.value)}
               required
             />
           </Form.Group>
           <Form.Group className='mb-3'>
             <Form.Label>
-              <strong>tech value </strong>
+              <strong>Framework value </strong>
             </Form.Label>
             <Form.Select
               type='number'
-              value={backendTechProgress}
-              placeholder='Frontend Tech Value Number'
+              value={backendFrameworkProgress}
+              placeholder='backend Framework Value Number'
               disabled={loading}
-              onChange={(e) => setBackendTechProgress(e.target.value)}
+              onChange={(e) => setBackendFrameworkProgress(e.target.value)}
               required
             >
               <option value='0'>0 %</option>
@@ -89,12 +114,12 @@ const EditBackendTechForm = () => {
           </Form.Group>{' '}
           <Form.Group className='mb-3'>
             <Form.Label>
-              <strong>tech variant</strong>
+              <strong>Framework variant</strong>
             </Form.Label>
             <Form.Select
-              value={backendTechVariant}
+              value={backendFrameworkVariant}
               disabled={loading}
-              onChange={(e) => setBackendTechVariant(e.target.value)}
+              onChange={(e) => setBackendFrameworkVariant(e.target.value)}
               required
             >
               <option value='primary'>primary</option>
@@ -119,4 +144,4 @@ const EditBackendTechForm = () => {
   );
 };
 
-export default EditBackendTechForm;
+export default EditBackendFrameworkForm;

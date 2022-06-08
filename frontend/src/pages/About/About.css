@@ -16,8 +16,21 @@
   text-align: center;
   opacity: 0;
 }
+.about .devtool-sec .mini-edit-btn,
+.about .devtool-sec .mini-delete-btn {
+  font-size: 1rem;
+  cursor: pointer;
+  margin: 3px;
+  background-color: #404040;
+  text-align: center;
+  opacity: 0;
+}
 .about .frontend-sec:hover .mini-edit-btn,
-.about .frontend-sec:hover .mini-delete-btn {
+.about .frontend-sec:hover .mini-delete-btn,
+.about .backend-sec:hover .mini-edit-btn,
+.about .backend-sec:hover .mini-delete-btn,
+.about .devtool-sec:hover .mini-edit-btn,
+.about .devtool-sec:hover .mini-delete-btn {
   opacity: 1;
 }
 .about .mini-edit-btn,
@@ -29,11 +42,13 @@
   color: crimson;
 }
 .about .services,
-.about .skills {
+.about .skills,
+.about .devtools {
   position: relative;
 }
 .about .services .add-btn,
-.about .skills .add-btn {
+.about .skills .add-btn,
+.about .devtools .add-btn {
   position: absolute;
   top: 0;
   right: 0;
@@ -41,12 +56,14 @@
   opacity: 0;
 }
 .about .services .add-btn:hover,
-.about .skills .add-btn:hover {
+.about .skills .add-btn:hover,
+.about .devtools .add-btn:hover {
   transition: all 0.3s ease-in-out;
   background-color: violet;
 }
 .about .services:hover .add-btn,
-.about .skills:hover .add-btn {
+.about .skills:hover .add-btn,
+.about .devtools:hover .add-btn {
   opacity: 1;
 }
 .about .add-btn {

@@ -27,6 +27,9 @@ const {
   getAllBackendTechs,
   getFrontendTechById,
   getBackendTechById,
+  getFrontendFrameworkById,
+  getBackendFrameworkById,
+  getDevtoolById,
 } = require('../controllers/AboutControllers');
 const Authentication = require('../middleWares/Authentication');
 const router = express.Router();
@@ -63,6 +66,10 @@ router
   .put(updateFrontendTech)
   .delete(deleteFrontendTech);
 
+// Get Frontend Framework By Id
+
+router.route('/:aboutId/frontend/:frameworkId').get(getFrontendFrameworkById);
+
 // Add Frontend Frameworks  & Update Frontend Frameworks  & Delete Frontend Frameworks
 
 router
@@ -87,6 +94,10 @@ router
   .put(updateBackendTech)
   .delete(deleteBackendTech);
 
+// Get Frontend Framework By Id
+
+router.route('/:aboutId/backend/:frameworkId').get(getBackendFrameworkById);
+
 // Add Backend Frameworks  & Update Backend Frameworks  & Delete Backend Frameworks
 
 router
@@ -95,11 +106,15 @@ router
   .put(updateBackendFramework)
   .delete(deleteBackendFramework);
 
-// Add Dev Tools & Delete Dev Tools
+// Get Devtool By Id
+
+router.route('/:aboutId/devtool').post(addDevTool);
+
+// Get Devtool By Id && Add Dev Tools & Delete Dev Tools
 
 router
-  .route('/:aboutId/devtools')
-  .post(addDevTool)
+  .route('/:aboutId/devtool/:devtoolId')
+  .get(getDevtoolById)
   .put(updateDevTool)
   .delete(deleteDevTool);
 

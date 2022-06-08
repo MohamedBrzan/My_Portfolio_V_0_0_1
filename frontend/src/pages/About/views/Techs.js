@@ -3,7 +3,14 @@ import Col from 'react-bootstrap/Col';
 import ProgressBar from 'react-bootstrap/ProgressBar';
 import { useNavigate } from 'react-router';
 import { useGetAboutDataQuery } from '../../../store/apis/AboutSlice';
-import { deleteFrontendTechFromApi } from '../../../admin/views/apis/TechsApi';
+import {
+  deleteBackendTechFromApi,
+  deleteFrontendTechFromApi,
+} from '../../../admin/views/apis/TechsApi';
+import {
+  deleteBackendFrameworkFromApi,
+  deleteFrontendFrameworkFromApi,
+} from '../../../admin/views/apis/FrameworksApi';
 
 const Techs = ({ about }) => {
   const navigate = useNavigate();
@@ -79,18 +86,44 @@ const Techs = ({ about }) => {
               return (
                 <div key={index}>
                   <Row>
+                    <Row className='flex-row-reverse'>
+                      <div
+                        className='mini-edit-btn col-1'
+                        onClick={() =>
+                          navigate(
+                            `/about/edit/frontend/frameworks/${about._id}/${framework._id}`
+                          )
+                        }
+                      >
+                        {' '}
+                        <i className='fa-solid fa-edit'></i>
+                      </div>{' '}
+                      <div
+                        className='mini-delete-btn col-1'
+                        onClick={() => {
+                          deleteFrontendFrameworkFromApi(
+                            about._id,
+                            framework._id
+                          );
+                          refetch();
+                        }}
+                      >
+                        {' '}
+                        <i className='fa-solid fa-trash'></i>
+                      </div>
+                    </Row>
                     <Col sm={6}>
-                      <b>{framework.framework}</b>
+                      <b>{framework.frontendFramework}</b>
                     </Col>
                     <Col sm={6} className='text-end'>
-                      <b>{framework.progress}%</b>
+                      <b>{framework.frontendFrameworkProgress}%</b>
                     </Col>
                   </Row>
                   <ProgressBar
                     animated
-                    variant='success'
-                    now={framework.progress}
-                    label={`${framework.progress}%`}
+                    variant={framework.frontendFrameworkVariant}
+                    now={framework.frontendFrameworkProgress}
+                    label={`${framework.frontendFrameworkProgress}%`}
                     className='bg-dark mb-3'
                   />
                 </div>
@@ -102,13 +135,37 @@ const Techs = ({ about }) => {
             </p>
           )}
         </Col>
-        <Col md={6}>
+        <Col md={6} className='backend-sec'>
           <h5>backend skills</h5>
           <div>
             {about.skills.backend.techs.length ? (
               about.skills.backend.techs.map((tech, index) => (
                 <div key={index}>
                   <Row>
+                    {' '}
+                    <Row className='flex-row-reverse'>
+                      <div
+                        className='mini-edit-btn col-1'
+                        onClick={() =>
+                          navigate(
+                            `/about/edit/backend/techs/${about._id}/${tech._id}`
+                          )
+                        }
+                      >
+                        {' '}
+                        <i className='fa-solid fa-edit'></i>
+                      </div>
+                      <div
+                        className='mini-delete-btn col-1'
+                        onClick={() => {
+                          deleteBackendTechFromApi(about._id, tech._id);
+                          refetch();
+                        }}
+                      >
+                        {' '}
+                        <i className='fa-solid fa-trash'></i>
+                      </div>
+                    </Row>
                     <Col sm={6}>
                       <b>{tech.backendTech}</b>
                     </Col>
@@ -135,18 +192,45 @@ const Techs = ({ about }) => {
               return (
                 <div key={index}>
                   <Row>
+                    {' '}
+                    <Row className='flex-row-reverse'>
+                      <div
+                        className='mini-edit-btn col-1'
+                        onClick={() =>
+                          navigate(
+                            `/about/edit/backend/frameworks/${about._id}/${framework._id}`
+                          )
+                        }
+                      >
+                        {' '}
+                        <i className='fa-solid fa-edit'></i>
+                      </div>{' '}
+                      <div
+                        className='mini-delete-btn col-1'
+                        onClick={() => {
+                          deleteBackendFrameworkFromApi(
+                            about._id,
+                            framework._id
+                          );
+                          refetch();
+                        }}
+                      >
+                        {' '}
+                        <i className='fa-solid fa-trash'></i>
+                      </div>
+                    </Row>
                     <Col sm={6}>
-                      <b>{framework.framework}</b>
+                      <b>{framework.backendFramework}</b>
                     </Col>
                     <Col sm={6} className='text-end'>
-                      <b>{framework.progress}%</b>
+                      <b>{framework.backendFrameworkProgress}%</b>
                     </Col>
                   </Row>
                   <ProgressBar
                     animated
-                    variant='success'
-                    now={framework.progress}
-                    label={`${framework.progress}%`}
+                    variant={framework.backendFrameworkVariant}
+                    now={framework.backendFrameworkProgress}
+                    label={`${framework.backendFrameworkProgress}%`}
                     className='bg-dark mb-3'
                   />
                 </div>

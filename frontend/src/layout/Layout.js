@@ -10,15 +10,18 @@ import Contact from '../pages/Contact/Contact';
 import Button from 'react-bootstrap/Button';
 import Home from '../admin/AdminPage/AdminPage';
 import AboutIntroForm from '../admin/views/AboutIntroForm/AboutIntroForm';
-import AboutForms from '../admin/views/AboutForms/AboutForms';
+import EditDevToolForm from '../admin/views/DevToolForm/EditDevToolForm';
 import ExperienceForm from '../admin/views/ExperienceForm/ExperienceForm';
 import PortfolioForm from '../admin/views/PortfolioForm/PortfolioForm';
 import ContactForm from '../admin/views/ContactForm/ContactForm';
 import EditServiceForm from '../admin/views/ServiceForm/EditServiceForm';
 import AddServiceForm from '../admin/views/ServiceForm/AddServiceForm';
-import AddTechForm from '../admin/views/TechForm/AddTechForm';
-import EditFrontendTechForm from '../admin/views/TechForm/EditFrontendTechForm';
-import EditBackendTechForm from '../admin/views/TechForm/EditBackendTechForm';
+import AddingSkillsForm from '../admin/views/AddingSkillsForm/AddingSkillsForm';
+import EditFrontendTechForm from '../admin/views/AddingSkillsForm/EditFrontendTechForm';
+import EditFrontendFrameworkForm from '../admin/views/FrameworkForm/EditFrontendFrameworkForm';
+import EditBackendTechForm from '../admin/views/AddingSkillsForm/EditBackendTechForm';
+import EditBackendFrameworkForm from '../admin/views/FrameworkForm/EditBackendFrameworkForm';
+import AddDevToolForm from '../admin/views/DevToolForm/AddDevToolForm';
 
 const Layout = () => {
   const ScrollToUp = useRef();
@@ -35,7 +38,7 @@ const Layout = () => {
     <div className='App'>
       <header className='App-header'>
         <Header />
-      </header>{' '}
+      </header>
       <Button
         ref={ScrollToUp}
         className='scroll-to-up'
@@ -56,26 +59,46 @@ const Layout = () => {
 
               <Route path='about/'>
                 <Route index element={<About />} />
-                <Route path='edit/intro/:id' element={<AboutIntroForm />} />
+                <Route
+                  path='edit/intro/:aboutId'
+                  element={<AboutIntroForm />}
+                />
                 <Route
                   path='edit/services/:aboutId/:serviceId'
                   element={<EditServiceForm />}
-                />{' '}
+                />
                 <Route
                   path='add/services/:aboutId'
                   element={<AddServiceForm />}
                 />
-                <Route path='edit/techs' element={<AboutForms />} />
-                <Route path='add/techs/:aboutId' element={<AddTechForm />} />
+                <Route
+                  path='add/techs/:aboutId'
+                  element={<AddingSkillsForm />}
+                />
                 <Route
                   path='edit/frontend/techs/:aboutId/:techId'
                   element={<EditFrontendTechForm />}
+                />
+                <Route
+                  path='edit/frontend/frameworks/:aboutId/:frameworkId'
+                  element={<EditFrontendFrameworkForm />}
                 />{' '}
+                <Route
+                  path='edit/backend/frameworks/:aboutId/:frameworkId'
+                  element={<EditBackendFrameworkForm />}
+                />
                 <Route
                   path='edit/backend/techs/:aboutId/:techId'
                   element={<EditBackendTechForm />}
                 />
-                <Route path='edit/devtool' element={<AboutForms />} />
+                <Route
+                  path='edit/devtool/:aboutId'
+                  element={<AddDevToolForm />}
+                />{' '}
+                <Route
+                  path='edit/devtool/:aboutId/:devtoolId'
+                  element={<EditDevToolForm />}
+                />
               </Route>
 
               <Route path='experience' element={<Experience />} />
@@ -87,7 +110,6 @@ const Layout = () => {
               <Route path='admin/'>
                 <Route index element={<Home />} />
                 <Route path='edit/home-view' element={<AboutIntroForm />} />
-                <Route path='edit/about-form' element={<AboutForms />} />
                 <Route
                   path='edit/experience-form'
                   element={<ExperienceForm />}

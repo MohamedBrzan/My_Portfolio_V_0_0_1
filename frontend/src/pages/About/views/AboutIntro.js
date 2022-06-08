@@ -2,12 +2,8 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
 import { Link } from 'react-router-dom';
-import { showAboutDetails } from './../../../store/reducers/AboutReducer';
-import { useDispatch } from 'react-redux';
 
 const AboutIntro = ({ about }) => {
-  const dispatch = useDispatch();
-
   return (
     <Row className='top-sec'>
       <Link to={`edit/intro/${about._id}`} className='text-end edit-btn'>

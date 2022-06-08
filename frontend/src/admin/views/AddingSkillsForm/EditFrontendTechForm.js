@@ -10,21 +10,14 @@ import {
   useGetFrontendTechByIdQuery,
   useGetAllFrontendTechsQuery,
   useUpdateFrontendTechMutation,
-} from '../../../store/apis/FrontendTechsSlice';
+} from '../../../store/apis/FrontendTechSlice';
+import axios from 'axios';
 
 const EditFrontendTechForm = () => {
   const [loading, setLoading] = useState(false);
   const { aboutId, techId } = useParams();
 
   const navigate = useNavigate();
-
-  const { isLoading } = useGetAllFrontendTechsQuery(aboutId);
-
-  const [updateFrontendTech] = useUpdateFrontendTechMutation();
-
-  const { data: techData, isSuccess } = useGetFrontendTechByIdQuery(
-    `/about/${aboutId}/frontend/tech/${techId}`
-  );
 
   const { refetch } = useGetAboutDataQuery();
 
@@ -33,28 +26,25 @@ const EditFrontendTechForm = () => {
   const [frontendTechVariant, setFrontendTechVariant] = useState('');
 
   useEffect(() => {
-    if (isSuccess) {
-      setFrontendTech(techData.frontendTech);
-      setFrontendTechProgress(techData.frontendTechProgress);
-      setFrontendTechVariant(techData.frontendTechVariant);
-    }
-  }, [isSuccess, techData]);
-
-  const canSave =
-    [frontendTech, frontendTechProgress, frontendTechVariant].every(Boolean) &&
-    !isLoading;
-
-  const handleUpdateSubmit = async () => {
-    if (canSave) {
-      await updateFrontendTech({
-        aboutId,
-        techId,
-        frontendTech,
-        frontendTechProgress,
-        frontendTechVariant,
-      });
-    }
-  };
+    const fetchingFrameworkData = async () => {
+      try {
+        setLoading(true);
+        const { data } = await axios({
+          mode: 'no-cors',
+          method: 'GET',
+          url: `http://localhost:5000/api/v1/about/${aboutId}/frontend/tech/${techId}`,
+        });
+        setFrontendTech(data.frontendTech);
+        setFrontendTechProgress(data.frontendTechProgress);
+        setFrontendTechVariant(data.frontendTechVariant);
+        setLoading(false);
+      } catch (error) {
+        setLoading(false);
+        console.log(error.message);
+      }
+    };
+    fetchingFrameworkData();
+  }, [aboutId, techId]);
 
   return (
     <Container className='my-5'>
@@ -63,7 +53,6 @@ const EditFrontendTechForm = () => {
         <Form
           onSubmit={(e) => {
             e.preventDefault();
-            handleUpdateSubmit();
             updateFrontendTechInDatabase(
               setLoading,
               aboutId,
@@ -73,6 +62,7 @@ const EditFrontendTechForm = () => {
               frontendTechVariant
             );
             refetch();
+            navigate('/about');
           }}
         >
           <Card.Title className='mb-3 bg-warning p-3 rounded'>

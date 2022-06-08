@@ -19,7 +19,21 @@
     opacity: 0;
   }
 
-  .frontend-sec {
+  .devtool-sec {
+    .mini-edit-btn,
+    .mini-delete-btn {
+      font-size: 1rem;
+      cursor: pointer;
+      margin: 3px;
+      background-color: #404040;
+      text-align: center;
+      opacity: 0;
+    }
+  }
+
+  .frontend-sec,
+  .backend-sec,
+  .devtool-sec {
     &:hover {
       .mini-edit-btn,
       .mini-delete-btn {
@@ -38,7 +52,8 @@
     color: crimson;
   }
   .services,
-  .skills {
+  .skills,
+  .devtools {
     position: relative;
     .add-btn {
       position: absolute;

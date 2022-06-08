@@ -6,7 +6,7 @@ import AboutReducer from './reducers/AboutReducer';
 import PortfolioSlice from './apis/PortfolioSlice';
 import ContactSlice from './apis/ContactSlice';
 import ExperienceSlice from './apis/ExperienceSlice';
-import FrontendTechsSlice from './apis/FrontendTechsSlice';
+import FrontendTechSlice from './apis/FrontendTechSlice';
 
 export default configureStore({
   reducer: {
@@ -14,7 +14,7 @@ export default configureStore({
     AboutReducer,
     [AboutSlice.reducerPath]: AboutSlice.reducer,
     [ServiceSlice.reducerPath]: ServiceSlice.reducer,
-    [FrontendTechsSlice.reducerPath]: FrontendTechsSlice.reducer,
+    [FrontendTechSlice.reducerPath]: FrontendTechSlice.reducer,
     [PortfolioSlice.reducerPath]: PortfolioSlice.reducer,
     [ContactSlice.reducerPath]: ContactSlice.reducer,
     [ExperienceSlice.reducerPath]: ExperienceSlice.reducer,
@@ -23,7 +23,7 @@ export default configureStore({
     getDefaultMiddleware().concat(
       AboutSlice.middleware,
       ServiceSlice.middleware,
-      FrontendTechsSlice.middleware,
+      FrontendTechSlice.middleware,
       PortfolioSlice.middleware,
       ContactSlice.middleware,
       ExperienceSlice.middleware

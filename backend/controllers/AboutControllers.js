@@ -11,9 +11,9 @@ exports.getAbout = AsyncHandler(async (req, res, next) => {
 
 //Get About By Id
 exports.getAboutById = AsyncHandler(async (req, res, next) => {
-  const { id } = req.params;
+  const { aboutId } = req.params;
 
-  let about = await About.findById(id);
+  let about = await About.findById(aboutId);
 
   if (!about) return next(new ErrorHandler(404, 'About Not Found'));
 
@@ -325,7 +325,7 @@ exports.updateBackendTech = AsyncHandler(async (req, res, next) => {
 
     return res.status(200).json(about);
   } else {
-    return next(new ErrorHandler(404, 'Skill not found or deleted'));
+    return next(new ErrorHandler(404, 'Tech not found or deleted'));
   }
 });
 
@@ -336,8 +336,8 @@ exports.deleteBackendTech = AsyncHandler(async (req, res, next) => {
 
   const about = await About.findById(aboutId);
 
-  const findTech = about.Skills.backend.techs.find(
-    (tech) => tech._id === techId
+  const findTech = about.skills.backend.techs.find(
+    (tech) => tech._id.toString() === techId
   );
 
   if (findTech) {
@@ -345,7 +345,26 @@ exports.deleteBackendTech = AsyncHandler(async (req, res, next) => {
     await about.save();
     return res.status(200).json(about);
   } else {
-    return next(new ErrorHandler(404, 'Skill not found or deleted'));
+    return next(new ErrorHandler(404, 'Tech not found or deleted'));
+  }
+});
+
+// Get Frontend Framework By Id
+exports.getFrontendFrameworkById = AsyncHandler(async (req, res, next) => {
+  const { aboutId, frameworkId } = req.params;
+
+  let about = await About.findById(aboutId);
+
+  if (!about) return next(new ErrorHandler(404, 'About Not Found'));
+
+  const findFramework = about.skills.frontend.frameworks.find(
+    (framework) => framework._id.toString() === frameworkId
+  );
+
+  if (findFramework) {
+    return res.status(200).json(findFramework);
+  } else {
+    return next(new ErrorHandler(404, 'Framework not found or deleted'));
   }
 });
 
@@ -377,7 +396,7 @@ exports.addFrontendFramework = AsyncHandler(async (req, res, next) => {
 exports.updateFrontendFramework = AsyncHandler(async (req, res, next) => {
   const { aboutId } = req.params;
   const {
-    frontendFrameworkId,
+    frameworkId,
     frontendFramework,
     frontendFrameworkProgress,
     frontendFrameworkVariant,
@@ -389,13 +408,13 @@ exports.updateFrontendFramework = AsyncHandler(async (req, res, next) => {
     return next(new ErrorHandler(404, `This About Id ${aboutId} not found`));
 
   const findFramework = about.skills.frontend.frameworks.find(
-    (framework) => framework._id.toString() === frontendFrameworkId
+    (framework) => framework._id.toString() === frameworkId
   );
 
   if (findFramework) {
-    findSkill.frontendFramework = frontendFramework;
-    findSkill.frontendFrameworkProgress = frontendFrameworkProgress;
-    findSkill.frontendFrameworkVariant = frontendFrameworkVariant;
+    findFramework.frontendFramework = frontendFramework;
+    findFramework.frontendFrameworkProgress = frontendFrameworkProgress;
+    findFramework.frontendFrameworkVariant = frontendFrameworkVariant;
 
     await about.save();
 
@@ -435,6 +454,25 @@ exports.deleteFrontendFramework = AsyncHandler(async (req, res, next) => {
   }
 });
 
+// Get Backend Framework By Id
+exports.getBackendFrameworkById = AsyncHandler(async (req, res, next) => {
+  const { aboutId, frameworkId } = req.params;
+
+  let about = await About.findById(aboutId);
+
+  if (!about) return next(new ErrorHandler(404, 'About Not Found'));
+
+  const findFramework = about.skills.backend.frameworks.find(
+    (framework) => framework._id.toString() === frameworkId
+  );
+
+  if (findFramework) {
+    return res.status(200).json(findFramework);
+  } else {
+    return next(new ErrorHandler(404, 'Framework not found or deleted'));
+  }
+});
+
 // Add Backend Framework
 exports.addBackendFramework = AsyncHandler(async (req, res, next) => {
   const { aboutId } = req.params;
@@ -463,7 +501,7 @@ exports.addBackendFramework = AsyncHandler(async (req, res, next) => {
 exports.updateBackendFramework = AsyncHandler(async (req, res, next) => {
   const { aboutId } = req.params;
   const {
-    backendFrameworkId,
+    frameworkId,
     backendFramework,
     backendFrameworkProgress,
     backendFrameworkVariant,
@@ -475,13 +513,13 @@ exports.updateBackendFramework = AsyncHandler(async (req, res, next) => {
     return next(new ErrorHandler(404, `This About Id ${aboutId} not found`));
 
   const findFramework = about.skills.backend.frameworks.find(
-    (framework) => framework._id.toString() === backendFrameworkId
+    (framework) => framework._id.toString() === frameworkId
   );
 
   if (findFramework) {
-    findSkill.backendFramework = backendFramework;
-    findSkill.backendFrameworkProgress = backendFrameworkProgress;
-    findSkill.backendFrameworkVariant = backendFrameworkVariant;
+    findFramework.backendFramework = backendFramework;
+    findFramework.backendFrameworkProgress = backendFrameworkProgress;
+    findFramework.backendFrameworkVariant = backendFrameworkVariant;
 
     await about.save();
 
@@ -521,6 +559,25 @@ exports.deleteBackendFramework = AsyncHandler(async (req, res, next) => {
   }
 });
 
+// Get Devtool By Id
+exports.getDevtoolById = AsyncHandler(async (req, res, next) => {
+  const { aboutId, devtoolId } = req.params;
+
+  let about = await About.findById(aboutId);
+
+  if (!about) return next(new ErrorHandler(404, 'About Not Found'));
+
+  const findDevtool = about.devtools.find(
+    (devtool) => devtool._id.toString() === devtoolId
+  );
+
+  if (findDevtool) {
+    return res.status(200).json(findDevtool);
+  } else {
+    return next(new ErrorHandler(404, 'Devtool not found or deleted'));
+  }
+});
+
 // Add DevTool
 exports.addDevTool = AsyncHandler(async (req, res, next) => {
   const { aboutId } = req.params;
@@ -531,31 +588,22 @@ exports.addDevTool = AsyncHandler(async (req, res, next) => {
   if (!about)
     return next(new ErrorHandler(404, `This About Id ${aboutId} not found`));
 
-  about = await About.findByIdAndUpdate(
-    aboutId,
-    {
-      $push: {
-        devtools: { tool, image },
-      },
-    },
-    {
-      new: true,
-      runValidators: true,
-    }
-  );
+  about.devtools.push({ tool, image });
 
-  res.status(200).json(about);
+  await about.save();
+
+  res.status(200).json(about.devtools);
 });
 
 // Update DevTools
 exports.updateDevTool = AsyncHandler(async (req, res, next) => {
-  const { aboutId } = req.params;
-  const { toolId, tool, image } = req.params;
+  const { aboutId, devtoolId } = req.params;
+  const { tool, image } = req.body;
 
   const about = await About.findById(aboutId);
 
   const findTool = about.devtools.find(
-    (tool) => tool._id.toString() === toolId
+    (devtool) => devtool._id.toString() === devtoolId
   );
 
   if (findTool) {
@@ -564,7 +612,7 @@ exports.updateDevTool = AsyncHandler(async (req, res, next) => {
 
     await about.save();
 
-    return res.status(200).json(about);
+    return res.status(200).json(about.devtools);
   } else {
     return next(new ErrorHandler(404, 'Tool not found or deleted'));
   }
@@ -572,28 +620,17 @@ exports.updateDevTool = AsyncHandler(async (req, res, next) => {
 
 // Delete DevTool
 exports.deleteDevTool = AsyncHandler(async (req, res, next) => {
-  const { aboutId } = req.params;
-  const { toolId } = req.body;
+  const { aboutId, devtoolId } = req.params;
 
   const about = await About.findById(aboutId);
 
-  const findTool = about.devtools.find((tool) => tool._id === toolId);
+  const findTool = about.devtools.find(
+    (devtool) => devtool._id.toString() === devtoolId
+  );
 
   if (findTool) {
-    about = await About.findByIdAndUpdate(
-      aboutId,
-      {
-        $pull: {
-          devtools: {
-            _id: req.params.toolId,
-          },
-        },
-      },
-      {
-        new: true,
-        runValidators: true,
-      }
-    );
+    about.devtools.pull(devtoolId);
+    await about.save();
     return res.status(200).json(about);
   } else {
     return next(new ErrorHandler(404, 'Tool not found or deleted'));

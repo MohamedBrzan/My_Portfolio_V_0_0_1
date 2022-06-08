@@ -98,7 +98,7 @@ export const addBackendTechToApi = async (
 };
 
 // Update Backend Tech
-export const updateBackendTech = async (
+export const updateBackendTechInDatabase = async (
   setLoading,
   aboutId,
   techId,

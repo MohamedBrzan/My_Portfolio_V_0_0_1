@@ -3,12 +3,12 @@ import axios from 'axios';
 //* Devtools Functions */
 
 // Add Devtools to Api
-export const addDevtoolToApi = async (id, setLoading, tool, image) => {
+export const addDevtoolToApi = async (setLoading, aboutId, tool, image) => {
   try {
     setLoading(true);
     await axios({
-      method: 'post',
-      url: `http://localhost:5000/api/v1/about/${id}/devtools`,
+      method: 'POST',
+      url: `http://localhost:5000/api/v1/about/${aboutId}/devtool`,
       data: {
         tool,
         image,
@@ -22,14 +22,24 @@ export const addDevtoolToApi = async (id, setLoading, tool, image) => {
 };
 
 // Update Devtool
-export const updateDevtool = async (id, setLoading, toolId, tool, image) => {
+export const updateDevtool = async (
+  setLoading,
+  aboutId,
+  devtoolId,
+  tool,
+  image
+) => {
   try {
+    if (image === '') {
+      alert('Error, Please upload an image In Next Time');
+      return;
+    }
+
     setLoading(true);
     await axios({
-      method: 'post',
-      url: `http://localhost:5000/api/v1/about/${id}/devtools`,
+      method: 'PUT',
+      url: `http://localhost:5000/api/v1/about/${aboutId}/devtool/${devtoolId}`,
       data: {
-        toolId,
         tool,
         image,
       },
@@ -42,19 +52,16 @@ export const updateDevtool = async (id, setLoading, toolId, tool, image) => {
 };
 
 // Delete Devtool From Api
-export const deleteDevtoolFromApi = async (id, setLoading, toolId) => {
+export const deleteDevtoolFromApi = async (aboutId, devtoolId) => {
   try {
-    setLoading(true);
+    // setLoading(true);
     await axios({
-      method: 'post',
-      url: `http://localhost:5000/api/v1/about/${id}/devtools`,
-      data: {
-        toolId,
-      },
+      method: 'DELETE',
+      url: `http://localhost:5000/api/v1/about/${aboutId}/devtool/${devtoolId}`,
     });
-    setLoading(false);
+    // setLoading(false);
   } catch (error) {
-    setLoading(false);
+    // setLoading(false);
     console.log(error.message);
   }
 };
