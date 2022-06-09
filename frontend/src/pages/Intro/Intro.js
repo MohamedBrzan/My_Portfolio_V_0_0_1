@@ -70,7 +70,7 @@ const Intro = () => {
               <span className='intro-title'>
                 {homeView.title.coloredPart}
               </span>{' '}
-              {homeView.title.lastPart}|
+              {homeView.title.lastPart}
             </h1>
             <Row>
               {loggedIn.success === true && (
