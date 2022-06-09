@@ -4,18 +4,16 @@ import Col from 'react-bootstrap/Col';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import { useNavigate } from 'react-router';
-import './Contact.css';
 import { useGetContactDataQuery } from '../../store/apis/ContactSlice';
 import { useState } from 'react';
 import { createMessage } from '../../admin/views/ContactForm/apis/ContactApi';
+import './Contact.css';
 
 const Contact = () => {
-  const { data, isLoading, isSuccess, isError, error } =
-    useGetContactDataQuery();
+  const { data, isLoading } = useGetContactDataQuery();
 
   const navigate = useNavigate();
 
-  const [loading, setLoading] = useState(false);
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [subject, setSubject] = useState('');
@@ -68,9 +66,9 @@ const Contact = () => {
               <Form
                 onSubmit={(e) => {
                   e.preventDefault();
-                  setLoading(true);
+
                   createMessage(item._id, name, email, subject, message);
-                  setLoading(false);
+
                   navigate('/');
                 }}
               >

@@ -17,7 +17,7 @@ export const addIntroToApi = async (
     setLoading(true);
     await axios({
       method: 'post',
-      url: 'http://localhost:5000/api/v1/about',
+      url: '/api/v1/about',
       data: {
         title: { firstPart, coloredPart, lastPart },
         button: { text, variant },
@@ -55,7 +55,7 @@ export const UpdateAbout = async (
 
     await axios({
       method: 'put',
-      url: `http://localhost:5000/api/v1/about/${aboutId}`,
+      url: `/api/v1/about/${aboutId}`,
       data: {
         title: { firstPart, coloredPart, lastPart },
         button: { text, variant },

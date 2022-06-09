@@ -44,7 +44,7 @@ const EditFullStackProjectForm = () => {
     const fetchProjectData = async () => {
       const { data } = await axios({
         method: 'GET',
-        url: `http://localhost:5000/api/v1/portfolio/${id}/fullStack/${projectId}`,
+        url: `/api/v1/portfolio/${id}/fullStack/${projectId}`,
       });
       setFullStackProImage(data.image);
       setFullStackProTitle(data.title);

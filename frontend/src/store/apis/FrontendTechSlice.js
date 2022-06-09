@@ -2,7 +2,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 const FrontendTechSlice = createApi({
   reducerPath: 'FrontendTechsSlice',
-  baseQuery: fetchBaseQuery({ baseUrl: 'http://localhost:5000/api/v1' }),
+  baseQuery: fetchBaseQuery({ baseUrl: '/api/v1' }),
   // tagTypes: ['About'],
   endpoints: (builder) => ({
     getAllFrontendTechs: builder.query({

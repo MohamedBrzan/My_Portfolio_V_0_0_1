@@ -16,6 +16,7 @@ const {
   createBackendProject,
   createFullStackProject,
 } = require('../controllers/PortfolioControllers');
+const Authentication = require('../middleWares/Authentication');
 const router = express.Router();
 
 // Get Portfolio & create Portfolio
@@ -28,38 +29,38 @@ router
 
 // Create Frontend Project
 
-router.route('/:id/frontend').post(createFrontendProject);
+router.route('/:id/frontend').post(Authentication, createFrontendProject);
 
 // Find Frontend Project by ID & Update Frontend Project & Delete Frontend Project
 
 router
   .route('/:id/frontend/:projectId')
   .get(getFrontendProjectById)
-  .put(updateFrontendProject)
-  .delete(deleteFrontendProject);
+  .put(Authentication, updateFrontendProject)
+  .delete(Authentication, deleteFrontendProject);
 
 // Create Backend Project
 
-router.route('/:id/backend').post(createBackendProject);
+router.route('/:id/backend').post(Authentication, createBackendProject);
 
 // Find Backend Project by ID & Update Backend Project & Delete Backend Project
 
 router
   .route('/:id/backend/:projectId')
   .get(getBackendProjectById)
-  .put(updateBackendProject)
-  .delete(deleteBackendProject);
+  .put(Authentication, updateBackendProject)
+  .delete(Authentication, deleteBackendProject);
 
 // Create FullStack Project
 
-router.route('/:id/fullStack').post(createFullStackProject);
+router.route('/:id/fullStack').post(Authentication, createFullStackProject);
 
 // Find FullStack Project by ID & Update FullStack Project & Delete FullStack Project
 
 router
   .route('/:id/fullStack/:projectId')
   .get(getFullStackProjectById)
-  .put(updateFullStackProject)
-  .delete(deleteFullStackProject);
+  .put(Authentication, updateFullStackProject)
+  .delete(Authentication, deleteFullStackProject);
 
 module.exports = router;

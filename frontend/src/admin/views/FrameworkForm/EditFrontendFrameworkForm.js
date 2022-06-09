@@ -29,7 +29,7 @@ const EditFrontendFrameworkForm = () => {
         const { data } = await axios({
           mode: 'no-cors',
           method: 'GET',
-          url: `http://localhost:5000/api/v1/about/${aboutId}/frontend/${frameworkId}`,
+          url: `/api/v1/about/${aboutId}/frontend/${frameworkId}`,
         });
         setFrontendFramework(data.frontendFramework);
         setFrontendFrameworkProgress(data.frontendFrameworkProgress);

@@ -8,12 +8,16 @@ import {
   deleteProgrammingExpFromApi,
 } from '../../admin/views/ExperienceForm/apis/ExperiencesApi';
 
+import { useContext } from 'react';
+import AuthContext from '../../auth/log/IsLogged';
 import './Experience.css';
 
 const Experience = () => {
+  const { loggedIn } = useContext(AuthContext);
+
   const navigate = useNavigate();
 
-  const { data, isLoading, isSuccess, isError, error, refetch } =
+  const { data, isLoading, isSuccess, error, refetch } =
     useGetExperienceDataQuery();
 
   return (
@@ -32,14 +36,17 @@ const Experience = () => {
       ) : isSuccess ? (
         data.map((allExperience, index) => (
           <Row key={index}>
-            <div
-              onClick={() =>
-                navigate(`/experience/add/experience/${allExperience._id}`)
-              }
-              className='add-btn'
-            >
-              <i className='fa-solid fa-add'></i>
-            </div>
+            {loggedIn.success === true && (
+              <div
+                onClick={() =>
+                  navigate(`/experience/add/experience/${allExperience._id}`)
+                }
+                className='add-btn'
+              >
+                <i className='fa-solid fa-add'></i>
+              </div>
+            )}
+
             <h2 className='text-start my-2 bg-dark p-2 rounded'>
               {allExperience.programming.programmingTitle}
             </h2>
@@ -47,32 +54,35 @@ const Experience = () => {
               allExperience.programming.experience.map(
                 (programmingExp, index) => (
                   <Col md={4} key={index} className='programming-exp mb-3'>
-                    <Row className='flex-row-reverse'>
-                      <div
-                        className='mini-edit-btn col-6'
-                        onClick={() =>
-                          navigate(
-                            `/experience/edit/${allExperience._id}/programming/${programmingExp._id}`
-                          )
-                        }
-                      >
-                        {' '}
-                        <i className='fa-solid fa-edit'></i>
-                      </div>
-                      <div
-                        className='mini-delete-btn col-6'
-                        onClick={() => {
-                          deleteProgrammingExpFromApi(
-                            allExperience._id,
-                            programmingExp._id
-                          );
-                          refetch();
-                        }}
-                      >
-                        {' '}
-                        <i className='fa-solid fa-trash'></i>
-                      </div>
-                    </Row>
+                    {loggedIn.success === true && (
+                      <Row className='flex-row-reverse'>
+                        <div
+                          className='mini-edit-btn col-6'
+                          onClick={() =>
+                            navigate(
+                              `/experience/edit/${allExperience._id}/programming/${programmingExp._id}`
+                            )
+                          }
+                        >
+                          {' '}
+                          <i className='fa-solid fa-edit'></i>
+                        </div>
+                        <div
+                          className='mini-delete-btn col-6'
+                          onClick={() => {
+                            deleteProgrammingExpFromApi(
+                              allExperience._id,
+                              programmingExp._id
+                            );
+                            refetch();
+                          }}
+                        >
+                          {' '}
+                          <i className='fa-solid fa-trash'></i>
+                        </div>
+                      </Row>
+                    )}
+
                     <div className='bg-dark card'>
                       <div className='img-container'>
                         <img
@@ -100,29 +110,35 @@ const Experience = () => {
             {allExperience.other.experience.length ? (
               allExperience.other.experience.map((otherExp, index) => (
                 <Col md={4} key={index} className='programming-exp mb-3'>
-                  <Row className='flex-row-reverse'>
-                    <div
-                      className='mini-edit-btn col-6'
-                      onClick={() =>
-                        navigate(
-                          `/experience/edit/${allExperience._id}/other/${otherExp._id}`
-                        )
-                      }
-                    >
-                      {' '}
-                      <i className='fa-solid fa-edit'></i>
-                    </div>
-                    <div
-                      className='mini-delete-btn col-6'
-                      onClick={() => {
-                        deleteOtherExpFromApi(allExperience._id, otherExp._id);
-                        refetch();
-                      }}
-                    >
-                      {' '}
-                      <i className='fa-solid fa-trash'></i>
-                    </div>
-                  </Row>
+                  {loggedIn.success === true && (
+                    <Row className='flex-row-reverse'>
+                      <div
+                        className='mini-edit-btn col-6'
+                        onClick={() =>
+                          navigate(
+                            `/experience/edit/${allExperience._id}/other/${otherExp._id}`
+                          )
+                        }
+                      >
+                        {' '}
+                        <i className='fa-solid fa-edit'></i>
+                      </div>
+                      <div
+                        className='mini-delete-btn col-6'
+                        onClick={() => {
+                          deleteOtherExpFromApi(
+                            allExperience._id,
+                            otherExp._id
+                          );
+                          refetch();
+                        }}
+                      >
+                        {' '}
+                        <i className='fa-solid fa-trash'></i>
+                      </div>
+                    </Row>
+                  )}
+
                   <div className='bg-dark card'>
                     <div className='img-container'>
                       <img

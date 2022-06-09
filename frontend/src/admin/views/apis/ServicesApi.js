@@ -15,7 +15,7 @@ export const addServiceToApi = async (
     setLoading(true);
     await axios({
       method: 'POST',
-      url: `http://localhost:5000/api/v1/about/${aboutId}`,
+      url: `/api/v1/about/${aboutId}`,
       data: { icon, service, serviceDesc },
     });
     setLoading(false);
@@ -40,7 +40,7 @@ export const updateServiceInDatabase = async (
     setLoading(true);
     await axios({
       method: 'PUT',
-      url: `http://localhost:5000/api/v1/about/${aboutId}/${serviceId}`,
+      url: `/api/v1/about/${aboutId}/${serviceId}`,
       data: { icon, service, serviceDesc },
     });
     setLoading(false);
@@ -55,7 +55,7 @@ export const deleteServiceFromApi = async (aboutId, serviceId) => {
   try {
     await axios({
       method: 'DELETE',
-      url: `http://localhost:5000/api/v1/about/${aboutId}/${serviceId}`,
+      url: `/api/v1/about/${aboutId}/${serviceId}`,
     });
   } catch (error) {
     console.log(error.message);

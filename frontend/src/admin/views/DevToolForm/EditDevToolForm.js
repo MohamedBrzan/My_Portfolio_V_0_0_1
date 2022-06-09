@@ -45,7 +45,7 @@ const EditDevToolForm = () => {
         const { data } = await axios({
           mode: 'no-cors',
           method: 'GET',
-          url: `http://localhost:5000/api/v1/about/${aboutId}/devtool/${devtoolId}`,
+          url: `/api/v1/about/${aboutId}/devtool/${devtoolId}`,
         });
         setTool(data.tool);
         setImage(data.image);

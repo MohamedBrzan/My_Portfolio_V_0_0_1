@@ -8,7 +8,7 @@ export const addDevtoolToApi = async (setLoading, aboutId, tool, image) => {
     setLoading(true);
     await axios({
       method: 'POST',
-      url: `http://localhost:5000/api/v1/about/${aboutId}/devtool`,
+      url: `/api/v1/about/${aboutId}/devtool`,
       data: {
         tool,
         image,
@@ -38,7 +38,7 @@ export const updateDevtool = async (
     setLoading(true);
     await axios({
       method: 'PUT',
-      url: `http://localhost:5000/api/v1/about/${aboutId}/devtool/${devtoolId}`,
+      url: `/api/v1/about/${aboutId}/devtool/${devtoolId}`,
       data: {
         tool,
         image,
@@ -57,7 +57,7 @@ export const deleteDevtoolFromApi = async (aboutId, devtoolId) => {
     // setLoading(true);
     await axios({
       method: 'DELETE',
-      url: `http://localhost:5000/api/v1/about/${aboutId}/devtool/${devtoolId}`,
+      url: `/api/v1/about/${aboutId}/devtool/${devtoolId}`,
     });
     // setLoading(false);
   } catch (error) {

@@ -36,15 +36,26 @@ const router = express.Router();
 
 // Get About & Create New About
 
-router.route('/').get(getAbout).post(createAbout).put(updateAbout);
+router
+  .route('/')
+  .get(getAbout)
+  .post(Authentication, createAbout)
+  .put(Authentication, updateAbout);
 
 // Update About title & description & image & Add About Services
 
-router.route('/:aboutId').get(getAboutById).post(addService).put(updateAbout);
+router
+  .route('/:aboutId')
+  .get(getAboutById)
+  .post(Authentication, addService)
+  .put(Authentication, updateAbout);
 
 // Add About Services & Delete Service & Set All Services & Delete All Services
 
-router.route('/:aboutId/:serviceId').put(updateService).delete(deleteService);
+router
+  .route('/:aboutId/:serviceId')
+  .put(Authentication, updateService)
+  .delete(Authentication, deleteService);
 
 // Add About Services & Delete Service & Set All Services & Delete All Services
 
@@ -62,9 +73,9 @@ router.route('/:aboutId/frontend/tech/:techId').get(getFrontendTechById);
 
 router
   .route('/:aboutId/frontend/tech')
-  .post(addFrontendTech)
-  .put(updateFrontendTech)
-  .delete(deleteFrontendTech);
+  .post(Authentication, addFrontendTech)
+  .put(Authentication, updateFrontendTech)
+  .delete(Authentication, deleteFrontendTech);
 
 // Get Frontend Framework By Id
 
@@ -74,9 +85,9 @@ router.route('/:aboutId/frontend/:frameworkId').get(getFrontendFrameworkById);
 
 router
   .route('/:aboutId/frontend/framework')
-  .post(addFrontendFramework)
-  .put(updateFrontendFramework)
-  .delete(deleteFrontendFramework);
+  .post(Authentication, addFrontendFramework)
+  .put(Authentication, updateFrontendFramework)
+  .delete(Authentication, deleteFrontendFramework);
 
 // Get All Backend Tech
 
@@ -90,9 +101,9 @@ router.route('/:aboutId/backend/tech/:techId').get(getBackendTechById);
 
 router
   .route('/:aboutId/backend/tech')
-  .post(addBackendTech)
-  .put(updateBackendTech)
-  .delete(deleteBackendTech);
+  .post(Authentication, addBackendTech)
+  .put(Authentication, updateBackendTech)
+  .delete(Authentication, deleteBackendTech);
 
 // Get Frontend Framework By Id
 
@@ -102,9 +113,9 @@ router.route('/:aboutId/backend/:frameworkId').get(getBackendFrameworkById);
 
 router
   .route('/:aboutId/backend/framework')
-  .post(addBackendFramework)
-  .put(updateBackendFramework)
-  .delete(deleteBackendFramework);
+  .post(Authentication, addBackendFramework)
+  .put(Authentication, updateBackendFramework)
+  .delete(Authentication, deleteBackendFramework);
 
 // Get Devtool By Id
 
@@ -115,7 +126,7 @@ router.route('/:aboutId/devtool').post(addDevTool);
 router
   .route('/:aboutId/devtool/:devtoolId')
   .get(getDevtoolById)
-  .put(updateDevTool)
-  .delete(deleteDevTool);
+  .put(Authentication, updateDevTool)
+  .delete(Authentication, deleteDevTool);
 
 module.exports = router;

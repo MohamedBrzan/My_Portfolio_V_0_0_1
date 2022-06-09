@@ -27,14 +27,15 @@ UserSchema.pre('save', function (next) {
   }
 });
 
-UserSchema.methods.generateJwt = function () {
-  return jwt.sign({ _id: this._id }, process.env.JWT_SECRET_KEY, {
-    expiresIn: process.env.JWT_EXPIRES_IN,
-  });
-};
-
 UserSchema.methods.comparePassword = function (password) {
   return bcrypt.compareSync(password, this.password);
+};
+
+UserSchema.methods.generateJwt = function () {
+  const token = jwt.sign({ _id: this._id }, process.env.JWT_SECRET_KEY, {
+    expiresIn: process.env.JWT_EXPIRES_IN,
+  });
+  return token;
 };
 
 module.exports = mongoose.model('User', UserSchema);

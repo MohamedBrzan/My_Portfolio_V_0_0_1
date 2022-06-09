@@ -27,7 +27,7 @@ const EditBackendTechForm = () => {
         const { data } = await axios({
           mode: 'no-cors',
           method: 'GET',
-          url: `http://localhost:5000/api/v1/about/${aboutId}/backend/tech/${techId}`,
+          url: `/api/v1/about/${aboutId}/backend/tech/${techId}`,
         });
         setBackendTech(data.backendTech);
         setBackendTechProgress(data.backendTechProgress);

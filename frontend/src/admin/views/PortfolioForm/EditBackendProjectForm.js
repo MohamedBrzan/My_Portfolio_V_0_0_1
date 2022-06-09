@@ -44,7 +44,7 @@ const EditBackendProjectForm = () => {
     const fetchProjectData = async () => {
       const { data } = await axios({
         method: 'GET',
-        url: `http://localhost:5000/api/v1/portfolio/${id}/backend/${projectId}`,
+        url: `/api/v1/portfolio/${id}/backend/${projectId}`,
       });
       setBackendProImage(data.image);
       setBackendProTitle(data.title);

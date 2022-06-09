@@ -15,7 +15,7 @@ exports.createNewHomeView = AsyncHandler(async (req, res, next) => {
 
   const title = {
     firstPart: req.body.title.firstPart,
-    coloredPart:req.body.title.coloredPart,
+    coloredPart: req.body.title.coloredPart,
     lastPart: req.body.title.lastPart,
   };
 
@@ -29,17 +29,30 @@ exports.createNewHomeView = AsyncHandler(async (req, res, next) => {
   res.status(201).json(homeView);
 });
 
+// Get HomeView By Id
+exports.getHomeViewById = AsyncHandler(async (req, res, next) => {
+  const { id } = req.params;
+  const homeView = await HomeView.findById(id);
+
+  res.status(200).json(homeView);
+});
+
 // Update HomeView
 exports.updateHomeView = AsyncHandler(async (req, res, next) => {
-  const { title, description, frontendImage, backendImages } = req.body;
+  const { id } = req.params;
+  const { description } = req.body;
+
+  const title = {
+    firstPart: req.body.title.firstPart,
+    coloredPart: req.body.title.coloredPart,
+    lastPart: req.body.title.lastPart,
+  };
 
   const homeView = await HomeView.findByIdAndUpdate(
-    req.params.id,
+    id,
     {
       title,
       description,
-      frontendImage,
-      backendImages,
     },
     {
       new: true,
@@ -52,154 +65,192 @@ exports.updateHomeView = AsyncHandler(async (req, res, next) => {
 
 //Add Frontend Images
 exports.addFrontendImages = AsyncHandler(async (req, res, next) => {
-  const { frontendImages } = req.body;
+  const { id } = req.params;
+  const { image, title } = req.body;
 
-  let homeView = await HomeView.findById(req.params.id);
+  let homeView = await HomeView.findById(id);
 
   if (!homeView) {
     return next(new ErrorHandler(404, 'HomeView not found'));
   }
 
-  for (const images in frontendImages) {
-    if (Object.hasOwnProperty.call(frontendImages, images)) {
-      const element = frontendImages[images];
+  const findTitle = homeView.frontendImages.find((t) => t.title === title);
 
-      const findImage = homeView.frontendImages.find(
-        (image) => image === element
-      );
+  if (findTitle) {
+    return next(new ErrorHandler(400, 'Title already exists'));
+  } else {
+    homeView.frontendImages.push({ title, image });
 
-      if (!findImage) {
-        homeView = await HomeView.findByIdAndUpdate(
-          req.params.id,
-          {
-            $push: {
-              frontendImages,
-            },
-          },
-          {
-            new: true,
-            runValidators: true,
-          }
-        );
-        return res.status(201).json(homeView);
-      } else {
-        return next(
-          new ErrorHandler(409, `Image already exists => ${findImage}`)
-        );
-      }
-    }
+    await homeView.save();
+
+    res.status(200).json(homeView);
+  }
+});
+
+//Get Frontend Image
+exports.getFrontendImage = AsyncHandler(async (req, res, next) => {
+  const { id, imageId } = req.params;
+
+  const homeView = await HomeView.findById(id);
+
+  if (!homeView) {
+    return next(new ErrorHandler(404, 'HomeView not found'));
+  }
+
+  let findImage = homeView.frontendImages.find(
+    (input) => input._id.toString() === imageId.toString()
+  );
+
+  if (findImage) {
+    return res.status(201).json(findImage);
+  } else {
+    return next(new ErrorHandler(404, 'Image not found'));
+  }
+});
+
+//Update Frontend Images
+exports.updateFrontendImages = AsyncHandler(async (req, res, next) => {
+  const { id, imageId } = req.params;
+  const { image, title } = req.body;
+
+  const homeView = await HomeView.findById(id);
+
+  if (!homeView) {
+    return next(new ErrorHandler(404, 'HomeView not found'));
+  }
+
+  let findImage = homeView.frontendImages.find(
+    (input) => input._id.toString() === imageId.toString()
+  );
+
+  if (findImage) {
+    findImage.image = image;
+    findImage.title = title;
+
+    await homeView.save();
+    return res.status(201).json(homeView);
+  } else {
+    return next(new ErrorHandler(404, 'Image not found'));
   }
 });
 
 // Delete Frontend Image
 exports.deleteFrontendImage = AsyncHandler(async (req, res, next) => {
-  const { targetImage } = req.body;
+  const { id, imageId } = req.params;
 
-  let homeView = await HomeView.findById(req.params.id);
+  let homeView = await HomeView.findById(id);
 
   if (!homeView) {
     return next(new ErrorHandler(404, 'HomeView not found'));
   }
 
   const findImage = homeView.frontendImages.find(
-    (frontendImage) => frontendImage.toString() === targetImage.toString()
+    (input) => input._id.toString() === imageId.toString()
   );
 
   if (findImage) {
-    const filterImages = homeView.frontendImages.filter(
-      (image) => image !== targetImage
-    );
+    homeView.frontendImages.pull(imageId);
 
-    homeView = await HomeView.findByIdAndUpdate(
-      req.params.id,
-      {
-        frontendImages: filterImages,
-      },
-      {
-        new: true,
-        runValidators: true,
-      }
-    );
+    await homeView.save();
+
+    return res.status(201).json(homeView);
   } else {
     return next(new ErrorHandler(404, 'Image not found'));
   }
-
-  return res.status(201).json(homeView);
 });
 
 //Add Backend Images
 exports.addBackendImages = AsyncHandler(async (req, res, next) => {
-  const { backendImages } = req.body;
+  const { id } = req.params;
+  const { image, title } = req.body;
 
-  let homeView = await HomeView.findById(req.params.id);
+  let homeView = await HomeView.findById(id);
 
   if (!homeView) {
     return next(new ErrorHandler(404, 'HomeView not found'));
   }
 
-  for (const images in backendImages) {
-    if (Object.hasOwnProperty.call(backendImages, images)) {
-      const element = backendImages[images];
+  const findTitle = homeView.backendImages.find((t) => t.title === title);
 
-      const findImage = homeView.backendImages.find(
-        (image) => image === element
-      );
+  if (findTitle) {
+    return next(new ErrorHandler(400, 'Title already exists'));
+  } else {
+    homeView.backendImages.push({ title, image });
 
-      if (!findImage) {
-        homeView = await HomeView.findByIdAndUpdate(
-          req.params.id,
-          {
-            $push: {
-              backendImages,
-            },
-          },
-          {
-            new: true,
-            runValidators: true,
-          }
-        );
-        return res.status(201).json(homeView);
-      } else {
-        return next(
-          new ErrorHandler(409, `Image already exists => ${findImage}`)
-        );
-      }
-    }
+    await homeView.save();
+
+    res.status(200).json(homeView);
+  }
+});
+
+//Get Backend Image
+exports.getBackendImage = AsyncHandler(async (req, res, next) => {
+  const { id, imageId } = req.params;
+
+  const homeView = await HomeView.findById(id);
+
+  if (!homeView) {
+    return next(new ErrorHandler(404, 'HomeView not found'));
+  }
+
+  let findImage = homeView.backendImages.find(
+    (input) => input._id.toString() === imageId.toString()
+  );
+
+  if (findImage) {
+    return res.status(201).json(findImage);
+  } else {
+    return next(new ErrorHandler(404, 'Image not found'));
+  }
+});
+
+//Update Backend Images
+exports.updateBackendImages = AsyncHandler(async (req, res, next) => {
+  const { id, imageId } = req.params;
+  const { image, title } = req.body;
+
+  const homeView = await HomeView.findById(id);
+
+  if (!homeView) {
+    return next(new ErrorHandler(404, 'HomeView not found'));
+  }
+
+  let findImage = homeView.backendImages.find(
+    (input) => input._id.toString() === imageId.toString()
+  );
+
+  if (findImage) {
+    findImage.image = image;
+    findImage.title = title;
+
+    await homeView.save();
+    return res.status(201).json(homeView);
+  } else {
+    return next(new ErrorHandler(404, 'Image not found'));
   }
 });
 
 // Delete Backend Image
 exports.deleteBackendImage = AsyncHandler(async (req, res, next) => {
-  const { targetImage } = req.body;
+  const { id, imageId } = req.params;
 
-  let homeView = await HomeView.findById(req.params.id);
+  let homeView = await HomeView.findById(id);
 
   if (!homeView) {
     return next(new ErrorHandler(404, 'HomeView not found'));
   }
 
   const findImage = homeView.backendImages.find(
-    (frontendImage) => frontendImage.toString() === targetImage.toString()
+    (input) => input._id.toString() === imageId.toString()
   );
 
   if (findImage) {
-    const filterImages = homeView.backendImages.filter(
-      (image) => image !== targetImage
-    );
+    homeView.backendImages.pull(imageId);
 
-    homeView = await HomeView.findByIdAndUpdate(
-      req.params.id,
-      {
-        backendImages: filterImages,
-      },
-      {
-        new: true,
-        runValidators: true,
-      }
-    );
+    await homeView.save();
+
+    return res.status(201).json(homeView);
   } else {
     return next(new ErrorHandler(404, 'Image not found'));
   }
-
-  return res.status(201).json(homeView);
 });

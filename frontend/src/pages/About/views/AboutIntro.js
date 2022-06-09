@@ -1,14 +1,19 @@
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import Button from 'react-bootstrap/Button';
 import { Link } from 'react-router-dom';
+import { useContext } from 'react';
+import AuthContext from '../../../auth/log/IsLogged';
 
 const AboutIntro = ({ about }) => {
+  const { loggedIn } = useContext(AuthContext);
   return (
     <Row className='top-sec'>
-      <Link to={`edit/intro/${about._id}`} className='text-end edit-btn'>
-        <i className='fa-solid fa-edit'></i>
-      </Link>
+      {loggedIn.success === true && (
+        <Link to={`edit/intro/${about._id}`} className='text-end edit-btn'>
+          <i className='fa-solid fa-edit'></i>
+        </Link>
+      )}
+
       <Col md={6}>
         <>
           <h3 className='introduction'>

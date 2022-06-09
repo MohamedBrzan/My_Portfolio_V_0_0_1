@@ -8,8 +8,18 @@ const HomeViewSchema = new mongoose.Schema(
       lastPart: { type: Array, required: true, unique: true },
     },
     description: { type: String, required: true, unique: true },
-    frontendImages: [{ type: String, required: true }],
-    backendImages: [{ type: String, required: true }],
+    frontendImages: [
+      {
+        title: { type: String, required: true },
+        image: { type: String, required: true },
+      },
+    ],
+    backendImages: [
+      {
+        title: { type: String, required: true },
+        image: { type: String, required: true },
+      },
+    ],
   },
   { timestamps: true }
 );

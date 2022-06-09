@@ -32,7 +32,7 @@ const EditFrontendTechForm = () => {
         const { data } = await axios({
           mode: 'no-cors',
           method: 'GET',
-          url: `http://localhost:5000/api/v1/about/${aboutId}/frontend/tech/${techId}`,
+          url: `/api/v1/about/${aboutId}/frontend/tech/${techId}`,
         });
         setFrontendTech(data.frontendTech);
         setFrontendTechProgress(data.frontendTechProgress);

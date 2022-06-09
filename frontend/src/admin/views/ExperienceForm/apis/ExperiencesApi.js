@@ -11,7 +11,7 @@ export const updateExperienceTitles = async (
   try {
     await axios({
       method: 'POST',
-      url: `http://localhost:5000/api/v1/experience/${id}`,
+      url: `/api/v1/experience/${id}`,
       data: {
         programmingTitle,
         otherTitle,
@@ -32,7 +32,7 @@ export const addProgrammingExpToApi = async (
   try {
     await axios({
       method: 'POST',
-      url: `http://localhost:5000/api/v1/experience/${id}/programming`,
+      url: `/api/v1/experience/${id}/programming`,
       data: {
         image: programmingExpImage,
         title: programmingExpTitle,
@@ -55,7 +55,7 @@ export const updateProgrammingExpInDatabase = async (
   try {
     await axios({
       method: 'PUT',
-      url: `http://localhost:5000/api/v1/experience/${id}/programming/${experienceId}`,
+      url: `/api/v1/experience/${id}/programming/${experienceId}`,
       data: {
         image,
         title,
@@ -72,7 +72,7 @@ export const deleteProgrammingExpFromApi = async (id, experienceId) => {
   try {
     await axios({
       method: 'DELETE',
-      url: `http://localhost:5000/api/v1/experience/${id}/programming/${experienceId}`,
+      url: `/api/v1/experience/${id}/programming/${experienceId}`,
     });
   } catch (error) {
     console.log(error.message);
@@ -89,7 +89,7 @@ export const addOtherExpToApi = async (
   try {
     await axios({
       method: 'POST',
-      url: `http://localhost:5000/api/v1/experience/${id}/other`,
+      url: `/api/v1/experience/${id}/other`,
       data: {
         image: otherExpImage,
         title: otherExpTitle,
@@ -112,7 +112,7 @@ export const updateOtherExpInDatabase = async (
   try {
     await axios({
       method: 'PUT',
-      url: `http://localhost:5000/api/v1/experience/${id}/other/${experienceId}`,
+      url: `/api/v1/experience/${id}/other/${experienceId}`,
       data: {
         image,
         title,
@@ -129,7 +129,7 @@ export const deleteOtherExpFromApi = async (id, experienceId) => {
   try {
     await axios({
       method: 'DELETE',
-      url: `http://localhost:5000/api/v1/experience/${id}/other/${experienceId}`,
+      url: `/api/v1/experience/${id}/other/${experienceId}`,
     });
   } catch (error) {
     console.log(error.message);

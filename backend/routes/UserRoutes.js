@@ -1,10 +1,18 @@
 const express = require('express');
 const router = express.Router();
-const { register, login, logout } = require('../controllers/UserControllers');
+const {
+  register,
+  login,
+  logout,
+  logged,
+  getUser,
+} = require('../controllers/UserControllers');
 
 // Register & Login
 
-router.route('/').get(login).post(register);
+router.route('/').post(login).get(logged);
+
+router.route('/admin').get(logged);
 
 // Logout
 

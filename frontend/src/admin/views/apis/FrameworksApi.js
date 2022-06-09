@@ -14,7 +14,7 @@ export const addFrontendFrameworkToApi = async (
     setLoading(true);
     await axios({
       method: 'POST',
-      url: `http://localhost:5000/api/v1/about/${aboutId}/frontend/framework`,
+      url: `/api/v1/about/${aboutId}/frontend/framework`,
       data: {
         frontendFramework,
         frontendFrameworkProgress,
@@ -41,7 +41,7 @@ export const updateFrontendFrameworkInDatabase = async (
     setLoading(true);
     await axios({
       method: 'PUT',
-      url: `http://localhost:5000/api/v1/about/${aboutId}/frontend/framework`,
+      url: `/api/v1/about/${aboutId}/frontend/framework`,
       data: {
         frameworkId,
         frontendFramework,
@@ -61,7 +61,7 @@ export const deleteFrontendFrameworkFromApi = async (aboutId, frameworkId) => {
   try {
     await axios({
       method: 'DELETE',
-      url: `http://localhost:5000/api/v1/about/${aboutId}/frontend/framework`,
+      url: `/api/v1/about/${aboutId}/frontend/framework`,
       data: {
         frameworkId,
       },
@@ -83,7 +83,7 @@ export const addBackendFrameworkToApi = async (
     setLoading(true);
     await axios({
       method: 'POST',
-      url: `http://localhost:5000/api/v1/about/${aboutId}/backend/framework`,
+      url: `/api/v1/about/${aboutId}/backend/framework`,
       data: {
         backendFramework,
         backendFrameworkProgress,
@@ -110,7 +110,7 @@ export const updateBackendFrameworkInDatabase = async (
     setLoading(true);
     await axios({
       method: 'PUT',
-      url: `http://localhost:5000/api/v1/about/${aboutId}/backend/framework`,
+      url: `/api/v1/about/${aboutId}/backend/framework`,
       data: {
         frameworkId,
         backendFramework,
@@ -130,7 +130,7 @@ export const deleteBackendFrameworkFromApi = async (aboutId, frameworkId) => {
   try {
     await axios({
       method: 'DELETE',
-      url: `http://localhost:5000/api/v1/about/${aboutId}/backend/framework`,
+      url: `/api/v1/about/${aboutId}/backend/framework`,
       data: {
         frameworkId,
       },

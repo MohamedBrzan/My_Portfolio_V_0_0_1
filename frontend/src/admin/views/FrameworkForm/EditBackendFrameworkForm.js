@@ -28,7 +28,7 @@ const EditBackendFrameworkForm = () => {
         const { data } = await axios({
           mode: 'no-cors',
           method: 'GET',
-          url: `http://localhost:5000/api/v1/about/${aboutId}/backend/${frameworkId}`,
+          url: `/api/v1/about/${aboutId}/backend/${frameworkId}`,
         });
         setBackendFramework(data.backendFramework);
         setBackendFrameworkProgress(data.backendFrameworkProgress);

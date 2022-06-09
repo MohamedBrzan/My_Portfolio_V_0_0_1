@@ -49,7 +49,7 @@ const EditFrontendProjectForm = () => {
     const fetchProjectData = async () => {
       const { data } = await axios({
         method: 'GET',
-        url: `http://localhost:5000/api/v1/portfolio/${id}/frontend/${projectId}`,
+        url: `/api/v1/portfolio/${id}/frontend/${projectId}`,
       });
       setFrontendProImage(data.image);
       setFrontendProTitle(data.title);

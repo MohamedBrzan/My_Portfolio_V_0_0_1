@@ -7,11 +7,13 @@ import PortfolioSlice from './apis/PortfolioSlice';
 import ContactSlice from './apis/ContactSlice';
 import ExperienceSlice from './apis/ExperienceSlice';
 import FrontendTechSlice from './apis/FrontendTechSlice';
+import HomeViewSlice from './apis/HomeViewSlice';
 
 export default configureStore({
   reducer: {
     HomeReducer,
     AboutReducer,
+    [HomeViewSlice.reducerPath]: HomeViewSlice.reducer,
     [AboutSlice.reducerPath]: AboutSlice.reducer,
     [ServiceSlice.reducerPath]: ServiceSlice.reducer,
     [FrontendTechSlice.reducerPath]: FrontendTechSlice.reducer,
@@ -21,6 +23,7 @@ export default configureStore({
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(
+      HomeViewSlice.middleware,
       AboutSlice.middleware,
       ServiceSlice.middleware,
       FrontendTechSlice.middleware,

@@ -45,7 +45,7 @@ const EditProgrammingExpForm = () => {
       try {
         const { data } = await axios({
           method: 'GET',
-          url: `http://localhost:5000/api/v1/experience/${id}/programming/${experienceId}`,
+          url: `/api/v1/experience/${id}/programming/${experienceId}`,
         });
         setProgrammingExpImage(data.image);
         setProgrammingExpTitle(data.title);

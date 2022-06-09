@@ -14,7 +14,7 @@ export const addFrontendTechToApi = async (
     setLoading(true);
     await axios({
       method: 'POST',
-      url: `http://localhost:5000/api/v1/about/${aboutId}/frontend/tech`,
+      url: `/api/v1/about/${aboutId}/frontend/tech`,
       data: {
         frontendTech,
         frontendTechProgress,
@@ -41,7 +41,7 @@ export const updateFrontendTechInDatabase = async (
     setLoading(true);
     await axios({
       method: 'PUT',
-      url: `http://localhost:5000/api/v1/about/${aboutId}/frontend/tech`,
+      url: `/api/v1/about/${aboutId}/frontend/tech`,
       data: {
         techId,
         frontendTech,
@@ -61,7 +61,7 @@ export const deleteFrontendTechFromApi = async (aboutId, techId) => {
   try {
     await axios({
       method: 'DELETE',
-      url: `http://localhost:5000/api/v1/about/${aboutId}/frontend/tech`,
+      url: `/api/v1/about/${aboutId}/frontend/tech`,
       data: {
         techId,
       },
@@ -83,7 +83,7 @@ export const addBackendTechToApi = async (
     setLoading(true);
     await axios({
       method: 'POST',
-      url: `http://localhost:5000/api/v1/about/${aboutId}/backend/tech`,
+      url: `/api/v1/about/${aboutId}/backend/tech`,
       data: {
         backendTech,
         backendTechProgress,
@@ -110,7 +110,7 @@ export const updateBackendTechInDatabase = async (
     setLoading(true);
     await axios({
       method: 'PUT',
-      url: `http://localhost:5000/api/v1/about/${aboutId}/backend/tech`,
+      url: `/api/v1/about/${aboutId}/backend/tech`,
       data: {
         techId,
         backendTech,
@@ -130,7 +130,7 @@ export const deleteBackendTechFromApi = async (aboutId, techId) => {
   try {
     await axios({
       method: 'DELETE',
-      url: `http://localhost:5000/api/v1/about/${aboutId}/backend/tech`,
+      url: `/api/v1/about/${aboutId}/backend/tech`,
       data: {
         techId,
       },

@@ -2,6 +2,7 @@ const User = require('../models/User');
 const AsyncHandler = require('../middleWares/AsyncHandler');
 const SentToken = require('../utils/SentToken');
 const ErrorHandler = require('../middleWares/ErrorHandler');
+const jwt = require('jsonwebtoken');
 
 // Register
 exports.register = AsyncHandler(async (req, res, next) => {
@@ -13,7 +14,7 @@ exports.register = AsyncHandler(async (req, res, next) => {
 
   user = await User.create({ name, email, password });
 
-  SentToken(res, user, 201);
+  return SentToken(res, user, 201);
 });
 
 // Login
@@ -29,12 +30,26 @@ exports.login = AsyncHandler(async (req, res, next) => {
   if (!user.comparePassword(password)) {
     return next(new ErrorHandler(401, 'Invalid password'));
   }
-  SentToken(res, user, 201);
+
+  return SentToken(res, user, 201);
+});
+
+// loggedIn
+exports.logged = AsyncHandler(async (req, res, next) => {
+  const { token } = req.cookies;
+
+  if (!token) return res.json({ success: false });
+
+  const verified = jwt.verify(token, process.env.JWT_SECRET_KEY);
+  const user = await User.findById(verified);
+  if (verified) return res.json({ success: true, user });
+
+  next();
 });
 
 // Get User
 exports.getUser = AsyncHandler(async (req, res, next) => {
-  const user = await User.findById(req.user.id);
+  const user = await User.findById(req.user._id);
 
   res.status(200).json(user);
 });

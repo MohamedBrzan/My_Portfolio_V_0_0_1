@@ -14,7 +14,7 @@ export const addFrontendProjectToApi = async (
   try {
     await axios({
       method: 'POST',
-      url: `http://localhost:5000/api/v1/portfolio/${id}/frontend`,
+      url: `/api/v1/portfolio/${id}/frontend`,
       data: {
         image: frontendProImage,
         title: frontendProTitle,
@@ -40,7 +40,7 @@ export const updateFrontendProjectInDatabase = async (
   try {
     await axios({
       method: 'PUT',
-      url: `http://localhost:5000/api/v1/portfolio/${id}/frontend/${projectId}`,
+      url: `/api/v1/portfolio/${id}/frontend/${projectId}`,
       data: {
         image: frontendProImage,
         title: frontendProTitle,
@@ -59,7 +59,7 @@ export const deleteFrontendProjectFromDatabase = async (id, projectId) => {
   try {
     await axios({
       method: 'DELETE',
-      url: `http://localhost:5000/api/v1/portfolio/${id}/frontend/${projectId}`,
+      url: `/api/v1/portfolio/${id}/frontend/${projectId}`,
     });
   } catch (error) {
     console.log(error.message);
@@ -78,7 +78,7 @@ export const addBackendProjectToApi = async (
   try {
     await axios({
       method: 'POST',
-      url: `http://localhost:5000/api/v1/portfolio/${id}/backend`,
+      url: `/api/v1/portfolio/${id}/backend`,
       data: {
         image: backendProImage,
         title: backendProTitle,
@@ -104,7 +104,7 @@ export const updateBackendProjectInDatabase = async (
   try {
     await axios({
       method: 'PUT',
-      url: `http://localhost:5000/api/v1/portfolio/${id}/backend/${projectId}`,
+      url: `/api/v1/portfolio/${id}/backend/${projectId}`,
       data: {
         image: backendProImage,
         title: backendProTitle,
@@ -123,7 +123,7 @@ export const deleteBackendProjectFromDatabase = async (id, projectId) => {
   try {
     await axios({
       method: 'DELETE',
-      url: `http://localhost:5000/api/v1/portfolio/${id}/backend/${projectId}`,
+      url: `/api/v1/portfolio/${id}/backend/${projectId}`,
     });
   } catch (error) {
     console.log(error.message);
@@ -142,7 +142,7 @@ export const addFullStackProjectToApi = async (
   try {
     await axios({
       method: 'POST',
-      url: `http://localhost:5000/api/v1/portfolio/${id}/fullStack`,
+      url: `/api/v1/portfolio/${id}/fullStack`,
       data: {
         image: fullStackProImage,
         title: fullStackProTitle,
@@ -168,7 +168,7 @@ export const updateFullStackProjectInDatabase = async (
   try {
     await axios({
       method: 'PUT',
-      url: `http://localhost:5000/api/v1/portfolio/${id}/fullStack/${projectId}`,
+      url: `/api/v1/portfolio/${id}/fullStack/${projectId}`,
       data: {
         image: fullStackProImage,
         title: fullStackProTitle,
@@ -187,7 +187,7 @@ export const deleteFullStackProjectFromDatabase = async (id, projectId) => {
   try {
     await axios({
       method: 'DELETE',
-      url: `http://localhost:5000/api/v1/portfolio/${id}/fullStack/${projectId}`,
+      url: `/api/v1/portfolio/${id}/fullStack/${projectId}`,
     });
   } catch (error) {
     console.log(error.message);

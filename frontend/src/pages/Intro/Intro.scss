@@ -8,8 +8,75 @@
   width: 100%;
   height: 100%;
 
+  .edit-btn {
+    font-size: 2rem;
+    cursor: pointer;
+    opacity: 0;
+  }
+
+  &:hover {
+    .edit-btn {
+      opacity: 1;
+    }
+  }
+
+  .mini-edit-btn,
+  .mini-delete-btn {
+    font-size: 1rem;
+    cursor: pointer;
+    margin: 5px;
+    background-color: #404040;
+    text-align: center;
+    opacity: 0;
+  }
+
+  .intro-col {
+    display: grid;
+    place-items: center;
+  }
+
+  .intro-col:hover {
+    .mini-edit-btn,
+    .mini-delete-btn {
+      opacity: 1;
+    }
+  }
+
+  .mini-edit-btn,
+  .edit-btn {
+    color: violet;
+  }
+
+  .mini-delete-btn,
+  .delete-btn {
+    color: crimson;
+  }
   .intro {
     margin: 25px;
+    position: relative;
+    .add-btn {
+      position: absolute;
+      top: 0;
+      right: 0;
+      padding: 8px;
+      width: 50px;
+      height: 50px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      border: 1px solid #fff;
+      opacity: 0;
+      cursor: pointer;
+      &:hover {
+        transition: all 0.3s ease-in-out;
+        background-color: violet;
+      }
+    }
+    &:hover {
+      .add-btn {
+        opacity: 1;
+      }
+    }
     @media (min-width: 768px) {
       margin: 250px 0 0 100px;
       width: 600px;

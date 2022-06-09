@@ -11,10 +11,14 @@ const router = express.Router();
 
 // Get Contact & Create New Contact
 
-router.route('/').get(getContact).post(createContact);
+router.route('/').get(getContact).post(Authentication, createContact);
 
 // Update Contact
 
-router.route('/:id').get(getContactById).post(createMessage).put(updateContact);
+router
+  .route('/:id')
+  .get(getContactById)
+  .post(createMessage)
+  .put(Authentication, updateContact);
 
 module.exports = router;

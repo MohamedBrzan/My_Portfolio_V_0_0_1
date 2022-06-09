@@ -44,7 +44,7 @@ const EditOtherExpForm = () => {
       try {
         const { data } = await axios({
           method: 'GET',
-          url: `http://localhost:5000/api/v1/experience/${id}/other/${experienceId}`,
+          url: `/api/v1/experience/${id}/other/${experienceId}`,
         });
         setOtherExpImage(data.image);
         setOtherExpTitle(data.title);

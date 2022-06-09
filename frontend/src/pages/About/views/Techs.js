@@ -11,8 +11,12 @@ import {
   deleteBackendFrameworkFromApi,
   deleteFrontendFrameworkFromApi,
 } from '../../../admin/views/apis/FrameworksApi';
+import { useContext } from 'react';
+import AuthContext from '../../../auth/log/IsLogged';
 
 const Techs = ({ about }) => {
+  const { loggedIn } = useContext(AuthContext);
+
   const navigate = useNavigate();
   const { refetch } = useGetAboutDataQuery();
 
@@ -25,40 +29,44 @@ const Techs = ({ about }) => {
       <Row>
         <Col md={6} className='frontend-sec'>
           <h5>frontend skills</h5>
-          <div
-            onClick={() => navigate(`/about/add/techs/${about._id}`)}
-            className='add-btn'
-          >
-            <i className='fa-solid fa-add'></i>
-          </div>
+          {loggedIn.success === true && (
+            <div
+              onClick={() => navigate(`/about/add/techs/${about._id}`)}
+              className='add-btn'
+            >
+              <i className='fa-solid fa-add'></i>
+            </div>
+          )}
           <div>
             {about.skills.frontend.techs.length ? (
               about.skills.frontend.techs.map((tech, index) => (
                 <div key={index}>
                   <Row className='frontend-sec'>
-                    <Row className='flex-row-reverse'>
-                      <div
-                        className='mini-edit-btn col-1'
-                        onClick={() =>
-                          navigate(
-                            `/about/edit/frontend/techs/${about._id}/${tech._id}`
-                          )
-                        }
-                      >
-                        {' '}
-                        <i className='fa-solid fa-edit'></i>
-                      </div>
-                      <div
-                        className='mini-delete-btn col-1'
-                        onClick={() => {
-                          deleteFrontendTechFromApi(about._id, tech._id);
-                          refetch();
-                        }}
-                      >
-                        {' '}
-                        <i className='fa-solid fa-trash'></i>
-                      </div>
-                    </Row>
+                    {loggedIn.success === true && (
+                      <Row className='flex-row-reverse'>
+                        <div
+                          className='mini-edit-btn col-1'
+                          onClick={() =>
+                            navigate(
+                              `/about/edit/frontend/techs/${about._id}/${tech._id}`
+                            )
+                          }
+                        >
+                          {' '}
+                          <i className='fa-solid fa-edit'></i>
+                        </div>
+                        <div
+                          className='mini-delete-btn col-1'
+                          onClick={() => {
+                            deleteFrontendTechFromApi(about._id, tech._id);
+                            refetch();
+                          }}
+                        >
+                          {' '}
+                          <i className='fa-solid fa-trash'></i>
+                        </div>
+                      </Row>
+                    )}
                     <Col sm={6}>
                       <b>{tech.frontendTech}</b>
                     </Col>
@@ -86,32 +94,34 @@ const Techs = ({ about }) => {
               return (
                 <div key={index}>
                   <Row>
-                    <Row className='flex-row-reverse'>
-                      <div
-                        className='mini-edit-btn col-1'
-                        onClick={() =>
-                          navigate(
-                            `/about/edit/frontend/frameworks/${about._id}/${framework._id}`
-                          )
-                        }
-                      >
-                        {' '}
-                        <i className='fa-solid fa-edit'></i>
-                      </div>{' '}
-                      <div
-                        className='mini-delete-btn col-1'
-                        onClick={() => {
-                          deleteFrontendFrameworkFromApi(
-                            about._id,
-                            framework._id
-                          );
-                          refetch();
-                        }}
-                      >
-                        {' '}
-                        <i className='fa-solid fa-trash'></i>
-                      </div>
-                    </Row>
+                    {loggedIn.success === true && (
+                      <Row className='flex-row-reverse'>
+                        <div
+                          className='mini-edit-btn col-1'
+                          onClick={() =>
+                            navigate(
+                              `/about/edit/frontend/frameworks/${about._id}/${framework._id}`
+                            )
+                          }
+                        >
+                          {' '}
+                          <i className='fa-solid fa-edit'></i>
+                        </div>{' '}
+                        <div
+                          className='mini-delete-btn col-1'
+                          onClick={() => {
+                            deleteFrontendFrameworkFromApi(
+                              about._id,
+                              framework._id
+                            );
+                            refetch();
+                          }}
+                        >
+                          {' '}
+                          <i className='fa-solid fa-trash'></i>
+                        </div>
+                      </Row>
+                    )}
                     <Col sm={6}>
                       <b>{framework.frontendFramework}</b>
                     </Col>
@@ -143,29 +153,31 @@ const Techs = ({ about }) => {
                 <div key={index}>
                   <Row>
                     {' '}
-                    <Row className='flex-row-reverse'>
-                      <div
-                        className='mini-edit-btn col-1'
-                        onClick={() =>
-                          navigate(
-                            `/about/edit/backend/techs/${about._id}/${tech._id}`
-                          )
-                        }
-                      >
-                        {' '}
-                        <i className='fa-solid fa-edit'></i>
-                      </div>
-                      <div
-                        className='mini-delete-btn col-1'
-                        onClick={() => {
-                          deleteBackendTechFromApi(about._id, tech._id);
-                          refetch();
-                        }}
-                      >
-                        {' '}
-                        <i className='fa-solid fa-trash'></i>
-                      </div>
-                    </Row>
+                    {loggedIn.success === true && (
+                      <Row className='flex-row-reverse'>
+                        <div
+                          className='mini-edit-btn col-1'
+                          onClick={() =>
+                            navigate(
+                              `/about/edit/backend/techs/${about._id}/${tech._id}`
+                            )
+                          }
+                        >
+                          {' '}
+                          <i className='fa-solid fa-edit'></i>
+                        </div>
+                        <div
+                          className='mini-delete-btn col-1'
+                          onClick={() => {
+                            deleteBackendTechFromApi(about._id, tech._id);
+                            refetch();
+                          }}
+                        >
+                          {' '}
+                          <i className='fa-solid fa-trash'></i>
+                        </div>
+                      </Row>
+                    )}
                     <Col sm={6}>
                       <b>{tech.backendTech}</b>
                     </Col>
@@ -192,33 +204,35 @@ const Techs = ({ about }) => {
               return (
                 <div key={index}>
                   <Row>
-                    {' '}
-                    <Row className='flex-row-reverse'>
-                      <div
-                        className='mini-edit-btn col-1'
-                        onClick={() =>
-                          navigate(
-                            `/about/edit/backend/frameworks/${about._id}/${framework._id}`
-                          )
-                        }
-                      >
-                        {' '}
-                        <i className='fa-solid fa-edit'></i>
-                      </div>{' '}
-                      <div
-                        className='mini-delete-btn col-1'
-                        onClick={() => {
-                          deleteBackendFrameworkFromApi(
-                            about._id,
-                            framework._id
-                          );
-                          refetch();
-                        }}
-                      >
-                        {' '}
-                        <i className='fa-solid fa-trash'></i>
-                      </div>
-                    </Row>
+                    {loggedIn.success === true && (
+                      <Row className='flex-row-reverse'>
+                        <div
+                          className='mini-edit-btn col-1'
+                          onClick={() =>
+                            navigate(
+                              `/about/edit/backend/frameworks/${about._id}/${framework._id}`
+                            )
+                          }
+                        >
+                          {' '}
+                          <i className='fa-solid fa-edit'></i>
+                        </div>{' '}
+                        <div
+                          className='mini-delete-btn col-1'
+                          onClick={() => {
+                            deleteBackendFrameworkFromApi(
+                              about._id,
+                              framework._id
+                            );
+                            refetch();
+                          }}
+                        >
+                          {' '}
+                          <i className='fa-solid fa-trash'></i>
+                        </div>
+                      </Row>
+                    )}
+
                     <Col sm={6}>
                       <b>{framework.backendFramework}</b>
                     </Col>
